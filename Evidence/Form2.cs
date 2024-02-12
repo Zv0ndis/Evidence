@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -45,6 +46,36 @@ namespace Evidence
         private void Form2_Load(object sender, EventArgs e)
         {
             radioButton2.Checked = true;
+        }
+
+        private void maskedTextBoxAverage_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
+
+        private void maskedTextBoxAverage_TextChanged(object sender, EventArgs e)
+        {
+            string text = maskedTextBoxAverage.Text;
+
+            if (double.TryParse(text, out double average) && average <= 1.5)
+            {
+                radioButtonAccepted.Checked = true;
+                radioButtonDenied.Checked = false;
+                radioButtonAccepted.Enabled = false;
+                radioButtonDenied.Enabled = false;
+            }
+            else
+            {
+                radioButtonAccepted.Checked = false;
+                radioButtonDenied.Checked = false; // Assuming this is the opposite of Accepted
+                radioButtonAccepted.Enabled = true; // Enable both buttons
+                radioButtonDenied.Enabled = true;
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

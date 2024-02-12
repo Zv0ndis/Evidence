@@ -98,10 +98,17 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "accountant",
+            "informatic",
+            "president",
+            "politic",
+            "otrokovican"});
             this.comboBox1.Location = new System.Drawing.Point(41, 131);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 7;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -197,10 +204,12 @@
             // maskedTextBoxAverage
             // 
             this.maskedTextBoxAverage.Location = new System.Drawing.Point(79, 171);
-            this.maskedTextBoxAverage.Mask = "000";
+            this.maskedTextBoxAverage.Mask = "0.0";
             this.maskedTextBoxAverage.Name = "maskedTextBoxAverage";
             this.maskedTextBoxAverage.Size = new System.Drawing.Size(22, 20);
             this.maskedTextBoxAverage.TabIndex = 16;
+            this.maskedTextBoxAverage.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBoxAverage_MaskInputRejected);
+            this.maskedTextBoxAverage.TextChanged += new System.EventHandler(this.maskedTextBoxAverage_TextChanged);
             // 
             // Form2
             // 

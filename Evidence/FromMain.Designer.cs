@@ -171,7 +171,7 @@
             this.buttonLookUp.Text = "Look Up";
             this.buttonLookUp.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // FormsMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -189,7 +189,7 @@
             this.Controls.Add(this.buttonApplience);
             this.Controls.Add(this.buttonFile);
             this.Controls.Add(this.textBox1);
-            this.Name = "Form1";
+            this.Name = "FormsMain";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
