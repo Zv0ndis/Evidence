@@ -14,12 +14,15 @@ namespace Evidence
 {
     public partial class Form2 : Form
     {
-        public Form2()
+        private string filePath;
+
+        public Form2(string filePath)
         {
             InitializeComponent();
+            this.filePath = filePath;
         }
 
-        
+
         private void Form2_FormClosed(object sender, FormClosedEventArgs e)
         {
             // Zobrazíme Form1
@@ -45,7 +48,7 @@ namespace Evidence
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            radioButton2.Checked = true;
+            radioButtonSecondarySchool.Checked = true;
         }
 
         private void maskedTextBoxAverage_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
@@ -76,6 +79,22 @@ namespace Evidence
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(radioButtonSecondarySchool.Checked) 
+            {
+                
+            }
+            else-IFe
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Windows.Forms;
 
 namespace Evidence
 {
+
     public partial class FormsMain : Form
     {
         public FormsMain()
@@ -99,7 +100,7 @@ namespace Evidence
         {
 
                 // Vytvoříme novou instanci Form2
-                Form2 form2 = new Form2();
+                Form2 form2 = new Form2(filePath);
 
                 // Zobrazíme Form2
                 form2.Show();

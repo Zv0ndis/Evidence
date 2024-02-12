@@ -31,7 +31,7 @@
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.labelName = new System.Windows.Forms.Label();
             this.labelSurname = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxSurname = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -41,10 +41,11 @@
             this.radioButtonAccepted = new System.Windows.Forms.RadioButton();
             this.radioButtonDenied = new System.Windows.Forms.RadioButton();
             this.labelState = new System.Windows.Forms.Label();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonUniversity = new System.Windows.Forms.RadioButton();
+            this.radioButtonSecondarySchool = new System.Windows.Forms.RadioButton();
             this.labelAverage = new System.Windows.Forms.Label();
             this.maskedTextBoxAverage = new System.Windows.Forms.MaskedTextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxName
@@ -72,12 +73,12 @@
             this.labelSurname.TabIndex = 3;
             this.labelSurname.Text = "Surname";
             // 
-            // textBox1
+            // textBoxSurname
             // 
-            this.textBox1.Location = new System.Drawing.Point(147, 53);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 2;
+            this.textBoxSurname.Location = new System.Drawing.Point(147, 53);
+            this.textBoxSurname.Name = "textBoxSurname";
+            this.textBoxSurname.Size = new System.Drawing.Size(100, 20);
+            this.textBoxSurname.TabIndex = 2;
             // 
             // label1
             // 
@@ -168,29 +169,29 @@
             this.labelState.TabIndex = 13;
             this.labelState.Text = "State of student";
             // 
-            // radioButton1
+            // radioButtonUniversity
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(291, 12);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(71, 17);
-            this.radioButton1.TabIndex = 15;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "University";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.radioButtonUniversity.AutoSize = true;
+            this.radioButtonUniversity.Location = new System.Drawing.Point(291, 12);
+            this.radioButtonUniversity.Name = "radioButtonUniversity";
+            this.radioButtonUniversity.Size = new System.Drawing.Size(71, 17);
+            this.radioButtonUniversity.TabIndex = 15;
+            this.radioButtonUniversity.TabStop = true;
+            this.radioButtonUniversity.Text = "University";
+            this.radioButtonUniversity.UseVisualStyleBackColor = true;
+            this.radioButtonUniversity.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
-            // radioButton2
+            // radioButtonSecondarySchool
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(49, 12);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(112, 17);
-            this.radioButton2.TabIndex = 14;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Secondary School";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            this.radioButtonSecondarySchool.AutoSize = true;
+            this.radioButtonSecondarySchool.Location = new System.Drawing.Point(49, 12);
+            this.radioButtonSecondarySchool.Name = "radioButtonSecondarySchool";
+            this.radioButtonSecondarySchool.Size = new System.Drawing.Size(112, 17);
+            this.radioButtonSecondarySchool.TabIndex = 14;
+            this.radioButtonSecondarySchool.TabStop = true;
+            this.radioButtonSecondarySchool.Text = "Secondary School";
+            this.radioButtonSecondarySchool.UseVisualStyleBackColor = true;
+            this.radioButtonSecondarySchool.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // labelAverage
             // 
@@ -211,13 +212,24 @@
             this.maskedTextBoxAverage.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBoxAverage_MaskInputRejected);
             this.maskedTextBoxAverage.TextChanged += new System.EventHandler(this.maskedTextBoxAverage_TextChanged);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(291, 171);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(71, 56);
+            this.button1.TabIndex = 18;
+            this.button1.Text = "Enter";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form2
             // 
             this.ClientSize = new System.Drawing.Size(387, 277);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.labelAverage);
             this.Controls.Add(this.maskedTextBoxAverage);
-            this.Controls.Add(this.radioButton1);
-            this.Controls.Add(this.radioButton2);
+            this.Controls.Add(this.radioButtonUniversity);
+            this.Controls.Add(this.radioButtonSecondarySchool);
             this.Controls.Add(this.labelState);
             this.Controls.Add(this.radioButtonDenied);
             this.Controls.Add(this.radioButtonAccepted);
@@ -228,10 +240,11 @@
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelSurname);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxSurname);
             this.Controls.Add(this.labelName);
             this.Controls.Add(this.textBoxName);
             this.Name = "Form2";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form2_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form2_FormClosed);
             this.Load += new System.EventHandler(this.Form2_Load);
             this.ResumeLayout(false);
@@ -244,7 +257,7 @@
         private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.Label labelName;
         private System.Windows.Forms.Label labelSurname;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxSurname;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.ComboBox comboBox1;
@@ -254,10 +267,11 @@
         private System.Windows.Forms.RadioButton radioButtonAccepted;
         private System.Windows.Forms.RadioButton radioButtonDenied;
         private System.Windows.Forms.Label labelState;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButtonUniversity;
+        private System.Windows.Forms.RadioButton radioButtonSecondarySchool;
         private System.Windows.Forms.Label labelAverage;
         private System.Windows.Forms.MaskedTextBox maskedTextBoxAverage;
+        private System.Windows.Forms.Button button1;
     }
 }
 
