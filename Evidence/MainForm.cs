@@ -12,17 +12,24 @@ using System.Windows.Forms;
 namespace Evidence
 {
 
-    public partial class FormsMain : Form
+    public partial class MainForm : Form
     {
-        public FormsMain()
+        string filePathHighSchool = "prihlasky_stredni.txt";
+        string filePathUniversity = "prihlasky_vyssi.txt";
+
+        public MainForm()
         {
             InitializeComponent();
+            if (!File.Exists(filePathHighSchool))  using (StreamWriter sw1 = File.CreateText(filePathHighSchool)) { }
+
+            if (!File.Exists(filePathUniversity)) using (StreamWriter sw2 = File.CreateText(filePathUniversity)) { }
+
         }
-        string fileContent = string.Empty;
-        string filePath = string.Empty;
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
             buttonFileDialog.Visible = false;
             buttonCloseFile.Visible = false;
             buttonDelete.Visible = false;
@@ -31,11 +38,6 @@ namespace Evidence
             buttonShowAll.Visible = false;
             buttonShow.Visible = false;
             buttonNewApllience.Visible = false;
-        }
-
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
-        {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -69,23 +71,29 @@ namespace Evidence
 
         private void buttonFileDialog_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            using(StreamReader sr = new StreamReader(filePathHighSchool))
             {
-                openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 2;
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                string line;
+                while ((line = sr.ReadLine()) != null)
                 {
-                    filePath = openFileDialog.FileName;
-
-
-                    var fileStream = openFileDialog.OpenFile();
-
-                    using (StreamReader reader = new StreamReader(fileStream))
+                    string[] parts = line.Split(',');
+                    if (parts.Length >= 1)
                     {
-                        fileContent = reader.ReadToEnd();
+
+                        listBox1.Items.Add($"{parts[1]} {parts[2]} - {parts[4]}");
+                    }
+                }
+            }
+
+            using (StreamReader sr = new StreamReader(filePathUniversity))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    string[] parts = line.Split(',');
+                    if (parts.Length >= 1)
+                    {
+                        listBox2.Items.Add($"{parts[1]} {parts[2]} - {parts[4]}");
                     }
                 }
             }
@@ -100,7 +108,7 @@ namespace Evidence
         {
 
                 // Vytvoříme novou instanci Form2
-                Form2 form2 = new Form2(filePath);
+                Form2 form2 = new Form2(filePathHighSchool,filePathUniversity);
 
                 // Zobrazíme Form2
                 form2.Show();

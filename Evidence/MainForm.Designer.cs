@@ -1,6 +1,6 @@
 ﻿namespace Evidence
 {
-    partial class FormsMain
+    partial class MainForm
     {
         /// <summary>
         /// Vyžaduje se proměnná návrháře.

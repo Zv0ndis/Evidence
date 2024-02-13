@@ -33,8 +33,8 @@
             this.labelSurname = new System.Windows.Forms.Label();
             this.textBoxSurname = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.dateTimePickerDoB = new System.Windows.Forms.DateTimePicker();
+            this.comboBoxStudy = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.maskedTextBoxPoints = new System.Windows.Forms.MaskedTextBox();
             this.labelPoints = new System.Windows.Forms.Label();
@@ -45,7 +45,10 @@
             this.radioButtonSecondarySchool = new System.Windows.Forms.RadioButton();
             this.labelAverage = new System.Windows.Forms.Label();
             this.maskedTextBoxAverage = new System.Windows.Forms.MaskedTextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxName
@@ -89,27 +92,26 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "DoB";
             // 
-            // dateTimePicker1
+            // dateTimePickerDoB
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(41, 92);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(149, 20);
-            this.dateTimePicker1.TabIndex = 6;
+            this.dateTimePickerDoB.Location = new System.Drawing.Point(41, 92);
+            this.dateTimePickerDoB.Name = "dateTimePickerDoB";
+            this.dateTimePickerDoB.Size = new System.Drawing.Size(149, 20);
+            this.dateTimePickerDoB.TabIndex = 6;
             // 
-            // comboBox1
+            // comboBoxStudy
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.comboBoxStudy.FormattingEnabled = true;
+            this.comboBoxStudy.Items.AddRange(new object[] {
             "accountant",
             "informatic",
             "president",
             "politic",
             "otrokovican"});
-            this.comboBox1.Location = new System.Drawing.Point(41, 131);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 7;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.comboBoxStudy.Location = new System.Drawing.Point(41, 131);
+            this.comboBoxStudy.Name = "comboBoxStudy";
+            this.comboBoxStudy.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxStudy.TabIndex = 7;
             // 
             // label2
             // 
@@ -127,7 +129,6 @@
             this.maskedTextBoxPoints.Name = "maskedTextBoxPoints";
             this.maskedTextBoxPoints.Size = new System.Drawing.Size(25, 20);
             this.maskedTextBoxPoints.TabIndex = 9;
-            this.maskedTextBoxPoints.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBoxPoints_MaskInputRejected);
             // 
             // labelPoints
             // 
@@ -141,24 +142,25 @@
             // radioButtonAccepted
             // 
             this.radioButtonAccepted.AutoSize = true;
-            this.radioButtonAccepted.Location = new System.Drawing.Point(41, 210);
+            this.radioButtonAccepted.Location = new System.Drawing.Point(8, 19);
             this.radioButtonAccepted.Name = "radioButtonAccepted";
             this.radioButtonAccepted.Size = new System.Drawing.Size(71, 17);
             this.radioButtonAccepted.TabIndex = 11;
-            this.radioButtonAccepted.TabStop = true;
+            this.radioButtonAccepted.Tag = "Group2";
             this.radioButtonAccepted.Text = "Accepted";
             this.radioButtonAccepted.UseVisualStyleBackColor = true;
             // 
             // radioButtonDenied
             // 
             this.radioButtonDenied.AutoSize = true;
-            this.radioButtonDenied.Location = new System.Drawing.Point(118, 210);
+            this.radioButtonDenied.Location = new System.Drawing.Point(106, 19);
             this.radioButtonDenied.Name = "radioButtonDenied";
             this.radioButtonDenied.Size = new System.Drawing.Size(59, 17);
             this.radioButtonDenied.TabIndex = 12;
-            this.radioButtonDenied.TabStop = true;
+            this.radioButtonDenied.Tag = "";
             this.radioButtonDenied.Text = "Denied";
             this.radioButtonDenied.UseVisualStyleBackColor = true;
+            this.radioButtonDenied.CheckedChanged += new System.EventHandler(this.radioButtonDenied_CheckedChanged);
             // 
             // labelState
             // 
@@ -172,26 +174,26 @@
             // radioButtonUniversity
             // 
             this.radioButtonUniversity.AutoSize = true;
-            this.radioButtonUniversity.Location = new System.Drawing.Point(291, 12);
+            this.radioButtonUniversity.Location = new System.Drawing.Point(164, 14);
             this.radioButtonUniversity.Name = "radioButtonUniversity";
             this.radioButtonUniversity.Size = new System.Drawing.Size(71, 17);
             this.radioButtonUniversity.TabIndex = 15;
-            this.radioButtonUniversity.TabStop = true;
+            this.radioButtonUniversity.Tag = "Group1";
             this.radioButtonUniversity.Text = "University";
             this.radioButtonUniversity.UseVisualStyleBackColor = true;
-            this.radioButtonUniversity.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.radioButtonUniversity.CheckedChanged += new System.EventHandler(this.radioButtonUniversity_CheckedChanged);
             // 
             // radioButtonSecondarySchool
             // 
             this.radioButtonSecondarySchool.AutoSize = true;
-            this.radioButtonSecondarySchool.Location = new System.Drawing.Point(49, 12);
+            this.radioButtonSecondarySchool.Location = new System.Drawing.Point(29, 15);
             this.radioButtonSecondarySchool.Name = "radioButtonSecondarySchool";
             this.radioButtonSecondarySchool.Size = new System.Drawing.Size(112, 17);
             this.radioButtonSecondarySchool.TabIndex = 14;
-            this.radioButtonSecondarySchool.TabStop = true;
+            this.radioButtonSecondarySchool.Tag = "Group1";
             this.radioButtonSecondarySchool.Text = "Secondary School";
             this.radioButtonSecondarySchool.UseVisualStyleBackColor = true;
-            this.radioButtonSecondarySchool.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            this.radioButtonSecondarySchool.CheckedChanged += new System.EventHandler(this.radioButtonSecondarySchool_CheckedChanged);
             // 
             // labelAverage
             // 
@@ -209,35 +211,45 @@
             this.maskedTextBoxAverage.Name = "maskedTextBoxAverage";
             this.maskedTextBoxAverage.Size = new System.Drawing.Size(22, 20);
             this.maskedTextBoxAverage.TabIndex = 16;
-            this.maskedTextBoxAverage.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBoxAverage_MaskInputRejected);
             this.maskedTextBoxAverage.TextChanged += new System.EventHandler(this.maskedTextBoxAverage_TextChanged);
             // 
-            // button1
+            // groupBox1
             // 
-            this.button1.Location = new System.Drawing.Point(291, 171);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(71, 56);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "Enter";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.groupBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.groupBox1.Controls.Add(this.radioButtonUniversity);
+            this.groupBox1.Controls.Add(this.radioButtonSecondarySchool);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.groupBox1.Location = new System.Drawing.Point(12, -3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(363, 37);
+            this.groupBox1.TabIndex = 18;
+            this.groupBox1.TabStop = false;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.groupBox2.Controls.Add(this.radioButtonAccepted);
+            this.groupBox2.Controls.Add(this.radioButtonDenied);
+            this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.groupBox2.Location = new System.Drawing.Point(41, 210);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(174, 52);
+            this.groupBox2.TabIndex = 19;
+            this.groupBox2.TabStop = false;
             // 
             // Form2
             // 
             this.ClientSize = new System.Drawing.Size(387, 277);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.labelAverage);
             this.Controls.Add(this.maskedTextBoxAverage);
-            this.Controls.Add(this.radioButtonUniversity);
-            this.Controls.Add(this.radioButtonSecondarySchool);
             this.Controls.Add(this.labelState);
-            this.Controls.Add(this.radioButtonDenied);
-            this.Controls.Add(this.radioButtonAccepted);
             this.Controls.Add(this.labelPoints);
             this.Controls.Add(this.maskedTextBoxPoints);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.comboBoxStudy);
+            this.Controls.Add(this.dateTimePickerDoB);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelSurname);
             this.Controls.Add(this.textBoxSurname);
@@ -247,6 +259,10 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form2_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form2_FormClosed);
             this.Load += new System.EventHandler(this.Form2_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -259,8 +275,8 @@
         private System.Windows.Forms.Label labelSurname;
         private System.Windows.Forms.TextBox textBoxSurname;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.DateTimePicker dateTimePickerDoB;
+        private System.Windows.Forms.ComboBox comboBoxStudy;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.MaskedTextBox maskedTextBoxPoints;
         private System.Windows.Forms.Label labelPoints;
@@ -271,7 +287,8 @@
         private System.Windows.Forms.RadioButton radioButtonSecondarySchool;
         private System.Windows.Forms.Label labelAverage;
         private System.Windows.Forms.MaskedTextBox maskedTextBoxAverage;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }
 
