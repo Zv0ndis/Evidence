@@ -8,8 +8,8 @@ namespace Evidence
 {
     internal class HSApplication : Application
     {
-        public HSApplication(string name,string surname,DateTime dob,string study,double points, bool accepted) 
-            : base(name,surname,dob,study, points,accepted)
+        public HSApplication(string iD,string name,string surname,DateTime dob,string study,double points, bool accepted) 
+            : base(iD,name,surname,dob,study, points,accepted)
         { 
         }
 

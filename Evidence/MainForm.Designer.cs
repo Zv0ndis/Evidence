@@ -179,7 +179,7 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(270, 126);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(120, 95);
+            this.listBox1.Size = new System.Drawing.Size(197, 95);
             this.listBox1.TabIndex = 13;
             // 
             // listBox2
@@ -187,7 +187,7 @@
             this.listBox2.FormattingEnabled = true;
             this.listBox2.Location = new System.Drawing.Point(511, 126);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(120, 95);
+            this.listBox2.Size = new System.Drawing.Size(226, 95);
             this.listBox2.TabIndex = 14;
             // 
             // label1
@@ -208,7 +208,7 @@
             this.label2.TabIndex = 16;
             this.label2.Text = "VŠ Přihlášky";
             // 
-            // FormsMain
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -230,7 +230,7 @@
             this.Controls.Add(this.buttonApplience);
             this.Controls.Add(this.buttonFile);
             this.Controls.Add(this.textBox1);
-            this.Name = "FormsMain";
+            this.Name = "MainForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);

@@ -14,30 +14,28 @@ using System.Security.Cryptography;
 
 namespace Evidence
 {
-
-
     public partial class Form2 : Form
     {
-        private string filePathHighSchool,filePathUniversity;
-
-        public Form2(string filePathHighSchool, string filePathUniversity)
+        private string filePathHighSchool, filePathUniversity;
+        List<Application> applications;
+        public Form2(string filePathHighSchool, string filePathUniversity,List<Application> applications)
         {
             InitializeComponent();
+            this.applications = applications;
             this.filePathUniversity = filePathUniversity;
             this.filePathHighSchool = filePathHighSchool;
         }
         private void Form2_Load(object sender, EventArgs e)
         {
             radioButtonSecondarySchool.Checked = true;
-            UniqueCodeGenerator.LoadExistingCodes(filePathHighSchool,filePathUniversity);
+            UniqueCodeGenerator.LoadExistingCodes(filePathHighSchool, filePathUniversity);
         }
 
         private void Form2_FormClosed(object sender, FormClosedEventArgs e)
         {
-            // Zobrazíme Form1
-            Form form1 = new MainForm();
 
-            form1.Show();
+
+            //.Show();
         }
 
         Application actualApplication;
@@ -65,6 +63,7 @@ namespace Evidence
 
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)
         {
+            string uniqueCode = UniqueCodeGenerator.GenerateUniqueCode();
             string name = textBoxName.Text;
             string surname = textBoxSurname.Text;
             DateTime dateOfBirth = dateTimePickerDoB.Value;
@@ -72,31 +71,22 @@ namespace Evidence
             bool acceptedChoice = radioButtonAcceptedChoice;
             double points = Convert.ToDouble(maskedTextBoxPoints.Text);
 
+
             if (radioButtonUniversity.Checked)
             {
                 double average = Convert.ToDouble(maskedTextBoxAverage.Text);
-                actualApplication = new UApplication(name, surname, dateOfBirth, selectedStudy, points, average, acceptedChoice);
 
-                try
+                using (StreamWriter sw = new StreamWriter(filePathUniversity, append: true))
                 {
-                    using (StreamWriter sw = new StreamWriter(filePathUniversity, append: true))
-                    {
-                        string dataLine = $"{UniqueCodeGenerator.GenerateUniqueCode()},{name},{surname},{dateOfBirth},{selectedStudy},{points},{average},{acceptedChoice}";
-                        sw.WriteLine(dataLine);
-                    }
-                    MessageBox.Show("Data written to the file successfully.");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"An error occurred while writing data to the file: {ex.Message}");
+                    string dataLine = $"{uniqueCode},{name},{surname},{dateOfBirth},{selectedStudy},{points},{average},{acceptedChoice}";
+                    sw.WriteLine(dataLine);
                 }
             }
             else if (radioButtonSecondarySchool.Checked)
             {
-                actualApplication = new HSApplication(name, surname, dateOfBirth, selectedStudy, points, acceptedChoice);
                 using (StreamWriter sw = new StreamWriter(filePathHighSchool))
                 {
-                    sw.WriteLine($"{UniqueCodeGenerator.GenerateUniqueCode()},{name},{surname},{dateOfBirth},{selectedStudy},{points},{acceptedChoice}");
+                    sw.WriteLine($"{uniqueCode},{name},{surname},{dateOfBirth},{selectedStudy},{points},{acceptedChoice}");
                 }
             }
         }

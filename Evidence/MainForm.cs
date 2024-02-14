@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace Evidence
 {
-
     public partial class MainForm : Form
     {
+        List<Application> applications = new List<Application>();
         string filePathHighSchool = "prihlasky_stredni.txt";
         string filePathUniversity = "prihlasky_vyssi.txt";
 
@@ -23,6 +23,7 @@ namespace Evidence
             if (!File.Exists(filePathHighSchool))  using (StreamWriter sw1 = File.CreateText(filePathHighSchool)) { }
 
             if (!File.Exists(filePathUniversity)) using (StreamWriter sw2 = File.CreateText(filePathUniversity)) { }
+
 
         }
 
@@ -71,6 +72,9 @@ namespace Evidence
 
         private void buttonFileDialog_Click(object sender, EventArgs e)
         {
+            listBox1.Items.Clear();
+            applications.Clear();
+
             using(StreamReader sr = new StreamReader(filePathHighSchool))
             {
                 string line;
@@ -79,7 +83,7 @@ namespace Evidence
                     string[] parts = line.Split(',');
                     if (parts.Length >= 1)
                     {
-
+                        applications.Add(new HSApplication(parts[0], parts[1], parts[2], parts[3], parts[5], parts[4], parts[5])
                         listBox1.Items.Add($"{parts[1]} {parts[2]} - {parts[4]}");
                     }
                 }
@@ -87,6 +91,7 @@ namespace Evidence
 
             using (StreamReader sr = new StreamReader(filePathUniversity))
             {
+                listBox2.Items.Clear();
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
@@ -107,14 +112,14 @@ namespace Evidence
         private void buttonNewApllience_Click(object sender, EventArgs e)
         {
 
-                // Vytvoříme novou instanci Form2
-                Form2 form2 = new Form2(filePathHighSchool,filePathUniversity);
+            // Vytvoříme novou instanci Form2
+            Form2 form2 = new Form2(filePathHighSchool, filePathUniversity, applications);
 
-                // Zobrazíme Form2
-                form2.Show();
-
+            // Zobrazíme Form2
+            this.Hide();
+            form2.ShowDialog();
+            this.Show()
                 // Skryjeme Form1
-                this.Hide();
 
 
         }

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Evidence
 {
-    internal class Application
+    public class Application
     {
+        string id;
         string name;
         string surname;
         DateTime dob;
@@ -16,8 +17,9 @@ namespace Evidence
         bool accepted;
 
 
-        public Application(string name,string surname,DateTime dob,string study, double points,bool accepted) 
+        public Application(string id,string name,string surname,DateTime dob,string study, double points,bool accepted) 
         {
+            this.id = id;
             this.name = name;
             this.surname = surname;
             this.dob = dob;
