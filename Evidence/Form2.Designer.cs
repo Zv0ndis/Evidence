@@ -101,6 +101,7 @@
             // 
             // comboBoxStudy
             // 
+            this.comboBoxStudy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxStudy.FormattingEnabled = true;
             this.comboBoxStudy.Items.AddRange(new object[] {
             "accountant",
@@ -108,7 +109,7 @@
             "president",
             "politic",
             "otrokovican"});
-            this.comboBoxStudy.Location = new System.Drawing.Point(41, 131);
+            this.comboBoxStudy.Location = new System.Drawing.Point(240, 92);
             this.comboBoxStudy.Name = "comboBoxStudy";
             this.comboBoxStudy.Size = new System.Drawing.Size(121, 21);
             this.comboBoxStudy.TabIndex = 7;

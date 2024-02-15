@@ -83,7 +83,9 @@ namespace Evidence
                     string[] parts = line.Split(',');
                     if (parts.Length >= 1)
                     {
-                        applications.Add(new HSApplication(parts[0], parts[1], parts[2], parts[3], parts[5], parts[4], parts[5])
+                        applications.Add(
+                            //             {uniqueCode},{name},{surname},       {dateOfBirth},     {selectedStudy}    {points},           {acceptedChoice}";
+                            new HSApplication(parts[0], parts[1], parts[2], DateTime.Parse(parts[3]), parts[4], Convert.ToDouble(parts[5]), Convert.ToBoolean(parts[6])));
                         listBox1.Items.Add($"{parts[1]} {parts[2]} - {parts[4]}");
                     }
                 }
@@ -98,6 +100,9 @@ namespace Evidence
                     string[] parts = line.Split(',');
                     if (parts.Length >= 1)
                     {
+                        applications.Add(
+                        //             {uniqueCode},{name},{surname},       {dateOfBirth},     {selectedStudy}    {points},                 ,{average}               {acceptedChoice}";
+                        new UApplication(parts[0], parts[1], parts[2], DateTime.Parse(parts[3]), parts[4], Convert.ToDouble(parts[5]),Convert.ToDouble(parts[6]), Convert.ToBoolean(parts[7])));
                         listBox2.Items.Add($"{parts[1]} {parts[2]} - {parts[4]}");
                     }
                 }
@@ -118,8 +123,8 @@ namespace Evidence
             // Zobrazíme Form2
             this.Hide();
             form2.ShowDialog();
-            this.Show()
-                // Skryjeme Form1
+            this.Show();
+            // Skryjeme Form1
 
 
         }

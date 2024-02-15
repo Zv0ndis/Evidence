@@ -18,7 +18,7 @@ namespace Evidence
     {
         private string filePathHighSchool, filePathUniversity;
         List<Application> applications;
-        public Form2(string filePathHighSchool, string filePathUniversity,List<Application> applications)
+        public Form2(string filePathHighSchool, string filePathUniversity, List<Application> applications)
         {
             InitializeComponent();
             this.applications = applications;
@@ -33,9 +33,6 @@ namespace Evidence
 
         private void Form2_FormClosed(object sender, FormClosedEventArgs e)
         {
-
-
-            //.Show();
         }
 
         Application actualApplication;
@@ -69,24 +66,29 @@ namespace Evidence
             DateTime dateOfBirth = dateTimePickerDoB.Value;
             string selectedStudy = comboBoxStudy.SelectedText;
             bool acceptedChoice = radioButtonAcceptedChoice;
-            double points = Convert.ToDouble(maskedTextBoxPoints.Text);
+            double points;
 
-
-            if (radioButtonUniversity.Checked)
+            if (double.TryParse(maskedTextBoxPoints.Text, out double hodnota))
             {
-                double average = Convert.ToDouble(maskedTextBoxAverage.Text);
+                points = hodnota;
 
-                using (StreamWriter sw = new StreamWriter(filePathUniversity, append: true))
+                if (radioButtonUniversity.Checked)
                 {
-                    string dataLine = $"{uniqueCode},{name},{surname},{dateOfBirth},{selectedStudy},{points},{average},{acceptedChoice}";
-                    sw.WriteLine(dataLine);
+                    double average = Convert.ToDouble(maskedTextBoxAverage.Text);
+
+                    using (StreamWriter sw = new StreamWriter(filePathUniversity, append: true))
+                    {
+                        string dataLine = $"{uniqueCode},{name},{surname},{dateOfBirth},{selectedStudy},{points},{average},{acceptedChoice}";
+                        sw.WriteLine(dataLine);
+                    }
                 }
-            }
-            else if (radioButtonSecondarySchool.Checked)
-            {
-                using (StreamWriter sw = new StreamWriter(filePathHighSchool))
+                else if (radioButtonSecondarySchool.Checked)
                 {
-                    sw.WriteLine($"{uniqueCode},{name},{surname},{dateOfBirth},{selectedStudy},{points},{acceptedChoice}");
+                    using (StreamWriter sw = new StreamWriter(filePathHighSchool))
+                    {
+                        string dataline = $"{uniqueCode},{name},{surname},{dateOfBirth},{selectedStudy},{points},{acceptedChoice}";
+                        sw.WriteLine(dataline);
+                    }
                 }
             }
         }
