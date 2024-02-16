@@ -16,6 +16,7 @@ namespace Evidence
         List<Application> applications = new List<Application>();
         string filePathHighSchool = "prihlasky_stredni.txt";
         string filePathUniversity = "prihlasky_vyssi.txt";
+        int indexSelectedItemp;
 
         public MainForm()
         {
@@ -127,6 +128,31 @@ namespace Evidence
             // Skryjeme Form1
 
 
+        }
+
+        private void buttonEdit_Click(object sender, EventArgs e)
+        {
+            //if((listBox1.SelectedIndex == -1) && (listBox2.SelectedIndex == -1)
+            //{
+
+            //}
+            // Vytvoříme novou instanci Form2
+            Form2 form2 = new Form2(filePathHighSchool, filePathUniversity, applications);
+
+            // Zobrazíme Form2
+            this.Hide();
+            form2.ShowDialog();
+            this.Show();
+        }
+
+        private void listBox1_Enter(object sender, EventArgs e)
+        {
+            listBox2.SelectedItems.Clear();
+        }
+
+        private void listBox2_Enter(object sender, EventArgs e)
+        {
+            listBox1.SelectedItems.Clear();
         }
     }
 }
