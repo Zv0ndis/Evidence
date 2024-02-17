@@ -1,6 +1,6 @@
 ﻿namespace Evidence
 {
-    partial class FormsMain
+    partial class MainForm
     {
         /// <summary>
         /// Vyžaduje se proměnná návrháře.
@@ -32,7 +32,6 @@
             this.buttonFile = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.buttonApplience = new System.Windows.Forms.Button();
-            this.buttonHighSchool = new System.Windows.Forms.Button();
             this.buttonSynchronize = new System.Windows.Forms.Button();
             this.buttonFileDialog = new System.Windows.Forms.Button();
             this.buttonCloseFile = new System.Windows.Forms.Button();
@@ -42,6 +41,12 @@
             this.buttonShow = new System.Windows.Forms.Button();
             this.buttonShowAll = new System.Windows.Forms.Button();
             this.buttonLookUp = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
@@ -64,7 +69,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
             // buttonApplience
             // 
@@ -76,18 +80,9 @@
             this.buttonApplience.UseVisualStyleBackColor = true;
             this.buttonApplience.Click += new System.EventHandler(this.buttonApplience_Click);
             // 
-            // buttonHighSchool
-            // 
-            this.buttonHighSchool.Location = new System.Drawing.Point(21, 82);
-            this.buttonHighSchool.Name = "buttonHighSchool";
-            this.buttonHighSchool.Size = new System.Drawing.Size(75, 23);
-            this.buttonHighSchool.TabIndex = 3;
-            this.buttonHighSchool.Text = "High School";
-            this.buttonHighSchool.UseVisualStyleBackColor = true;
-            // 
             // buttonSynchronize
             // 
-            this.buttonSynchronize.Location = new System.Drawing.Point(21, 111);
+            this.buttonSynchronize.Location = new System.Drawing.Point(21, 81);
             this.buttonSynchronize.Name = "buttonSynchronize";
             this.buttonSynchronize.Size = new System.Drawing.Size(75, 23);
             this.buttonSynchronize.TabIndex = 4;
@@ -134,6 +129,7 @@
             this.buttonEdit.TabIndex = 8;
             this.buttonEdit.Text = "Edit";
             this.buttonEdit.UseVisualStyleBackColor = true;
+            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
             // 
             // buttonDelete
             // 
@@ -143,6 +139,7 @@
             this.buttonDelete.TabIndex = 9;
             this.buttonDelete.Text = "Delete";
             this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // buttonShow
             // 
@@ -152,6 +149,7 @@
             this.buttonShow.TabIndex = 10;
             this.buttonShow.Text = "Show";
             this.buttonShow.UseVisualStyleBackColor = true;
+            this.buttonShow.Click += new System.EventHandler(this.buttonShow_Click);
             // 
             // buttonShowAll
             // 
@@ -161,6 +159,7 @@
             this.buttonShowAll.TabIndex = 11;
             this.buttonShowAll.Text = "Show All";
             this.buttonShowAll.UseVisualStyleBackColor = true;
+            this.buttonShowAll.Click += new System.EventHandler(this.buttonShowAll_Click);
             // 
             // buttonLookUp
             // 
@@ -171,11 +170,61 @@
             this.buttonLookUp.Text = "Look Up";
             this.buttonLookUp.UseVisualStyleBackColor = true;
             // 
-            // FormsMain
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(6, 15);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(197, 95);
+            this.listBox1.TabIndex = 13;
+            this.listBox1.Enter += new System.EventHandler(this.listBox1_Enter);
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(263, 15);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(226, 95);
+            this.listBox2.TabIndex = 14;
+            this.listBox2.Enter += new System.EventHandler(this.listBox2_Enter);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(270, 91);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(67, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "SŠ Přihlášky";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(508, 92);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(67, 13);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "VŠ Přihlášky";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.listBox1);
+            this.groupBox1.Controls.Add(this.listBox2);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox1.Location = new System.Drawing.Point(248, 111);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(540, 125);
+            this.groupBox1.TabIndex = 17;
+            this.groupBox1.TabStop = false;
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonLookUp);
             this.Controls.Add(this.buttonShowAll);
             this.Controls.Add(this.buttonShow);
@@ -185,13 +234,13 @@
             this.Controls.Add(this.buttonCloseFile);
             this.Controls.Add(this.buttonFileDialog);
             this.Controls.Add(this.buttonSynchronize);
-            this.Controls.Add(this.buttonHighSchool);
             this.Controls.Add(this.buttonApplience);
             this.Controls.Add(this.buttonFile);
             this.Controls.Add(this.textBox1);
-            this.Name = "FormsMain";
+            this.Name = "MainForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -203,7 +252,6 @@
         private System.Windows.Forms.Button buttonFile;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button buttonApplience;
-        private System.Windows.Forms.Button buttonHighSchool;
         private System.Windows.Forms.Button buttonSynchronize;
         private System.Windows.Forms.Button buttonFileDialog;
         private System.Windows.Forms.Button buttonCloseFile;
@@ -213,6 +261,11 @@
         private System.Windows.Forms.Button buttonShow;
         private System.Windows.Forms.Button buttonShowAll;
         private System.Windows.Forms.Button buttonLookUp;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 
