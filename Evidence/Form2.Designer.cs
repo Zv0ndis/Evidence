@@ -1,4 +1,6 @@
-﻿namespace Evidence
+﻿using System.Windows.Forms;
+
+namespace Evidence
 {
     partial class Form2
     {
@@ -94,6 +96,8 @@
             // 
             // dateTimePickerDoB
             // 
+            this.dateTimePickerDoB.Checked = false;
+            this.dateTimePickerDoB.CustomFormat = "dd/MM/yyyy";
             this.dateTimePickerDoB.Location = new System.Drawing.Point(41, 92);
             this.dateTimePickerDoB.Name = "dateTimePickerDoB";
             this.dateTimePickerDoB.Size = new System.Drawing.Size(149, 20);
@@ -290,6 +294,7 @@
         private System.Windows.Forms.MaskedTextBox maskedTextBoxAverage;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
+
     }
 }
 

@@ -8,12 +8,12 @@ namespace Evidence
 {
     internal class UApplication : Application
     {
-        double average;
+        public double Average { get; set; }
 
         public UApplication(string iD,string name, string surname, DateTime dob, string study, double average, double points,bool accepted)
             :base(iD, name,surname,dob, study, points,accepted)
         { 
-            this.average = average;
+            Average = average;
         }
     }
 }

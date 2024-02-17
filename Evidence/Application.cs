@@ -8,24 +8,24 @@ namespace Evidence
 {
     public class Application
     {
-        string id;
-        string name;
-        string surname;
-        DateTime dob;
-        string study;
-        double points;
-        bool accepted;
+        public string Id;
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public DateTime Dob { get; set; }
+        public string Study { get; set; }
+        public double Points { get; set; }
+        public bool Accepted { get; set; }
 
 
         public Application(string id,string name,string surname,DateTime dob,string study, double points,bool accepted) 
         {
-            this.id = id;
-            this.name = name;
-            this.surname = surname;
-            this.dob = dob;
-            this.study = study;
-            this.accepted = accepted;
-            this.points = points;
+            Id = id;
+            Name = name;
+            Surname = surname;
+            Dob = dob;
+            Study= study;
+            Accepted = accepted;
+            Points = points;
         }
 
     }

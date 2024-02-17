@@ -32,7 +32,6 @@
             this.buttonFile = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.buttonApplience = new System.Windows.Forms.Button();
-            this.buttonHighSchool = new System.Windows.Forms.Button();
             this.buttonSynchronize = new System.Windows.Forms.Button();
             this.buttonFileDialog = new System.Windows.Forms.Button();
             this.buttonCloseFile = new System.Windows.Forms.Button();
@@ -81,18 +80,9 @@
             this.buttonApplience.UseVisualStyleBackColor = true;
             this.buttonApplience.Click += new System.EventHandler(this.buttonApplience_Click);
             // 
-            // buttonHighSchool
-            // 
-            this.buttonHighSchool.Location = new System.Drawing.Point(21, 82);
-            this.buttonHighSchool.Name = "buttonHighSchool";
-            this.buttonHighSchool.Size = new System.Drawing.Size(75, 23);
-            this.buttonHighSchool.TabIndex = 3;
-            this.buttonHighSchool.Text = "High School";
-            this.buttonHighSchool.UseVisualStyleBackColor = true;
-            // 
             // buttonSynchronize
             // 
-            this.buttonSynchronize.Location = new System.Drawing.Point(21, 111);
+            this.buttonSynchronize.Location = new System.Drawing.Point(21, 81);
             this.buttonSynchronize.Name = "buttonSynchronize";
             this.buttonSynchronize.Size = new System.Drawing.Size(75, 23);
             this.buttonSynchronize.TabIndex = 4;
@@ -149,6 +139,7 @@
             this.buttonDelete.TabIndex = 9;
             this.buttonDelete.Text = "Delete";
             this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // buttonShow
             // 
@@ -158,6 +149,7 @@
             this.buttonShow.TabIndex = 10;
             this.buttonShow.Text = "Show";
             this.buttonShow.UseVisualStyleBackColor = true;
+            this.buttonShow.Click += new System.EventHandler(this.buttonShow_Click);
             // 
             // buttonShowAll
             // 
@@ -167,6 +159,7 @@
             this.buttonShowAll.TabIndex = 11;
             this.buttonShowAll.Text = "Show All";
             this.buttonShowAll.UseVisualStyleBackColor = true;
+            this.buttonShowAll.Click += new System.EventHandler(this.buttonShowAll_Click);
             // 
             // buttonLookUp
             // 
@@ -241,7 +234,6 @@
             this.Controls.Add(this.buttonCloseFile);
             this.Controls.Add(this.buttonFileDialog);
             this.Controls.Add(this.buttonSynchronize);
-            this.Controls.Add(this.buttonHighSchool);
             this.Controls.Add(this.buttonApplience);
             this.Controls.Add(this.buttonFile);
             this.Controls.Add(this.textBox1);
@@ -260,7 +252,6 @@
         private System.Windows.Forms.Button buttonFile;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button buttonApplience;
-        private System.Windows.Forms.Button buttonHighSchool;
         private System.Windows.Forms.Button buttonSynchronize;
         private System.Windows.Forms.Button buttonFileDialog;
         private System.Windows.Forms.Button buttonCloseFile;
