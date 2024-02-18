@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ using System.Windows.Forms;
 
 namespace Evidence
 {
+   
     public enum MessageBoxButtons
     {
         HighSchool, University, Cancel
@@ -18,6 +20,8 @@ namespace Evidence
 
     public partial class MainForm : Form
     {
+        private string connectionString { get { return @"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\zvond\\OneDrive\\Dokumenty\\Applience.mdf;Integrated Security=True;Connect Timeout=30"; } }
+
         public List<Application> applications = new List<Application>();
         string filePathHighSchool = "prihlasky_stredni.txt";
         string filePathUniversity = "prihlasky_vyssi.txt";
@@ -41,6 +45,7 @@ namespace Evidence
             buttonShowAll.Visible = false;
             buttonShow.Visible = false;
             buttonNewApllience.Visible = false;
+            textBox1.Visible = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -58,6 +63,7 @@ namespace Evidence
             buttonShowAll.Visible = false;
             buttonShow.Visible = false;
             buttonNewApllience.Visible = false;
+            textBox1.Visible = false;
         }
         private void buttonApplience_Click(object sender, EventArgs e)
         {
@@ -69,6 +75,7 @@ namespace Evidence
             buttonShowAll.Visible = true;
             buttonShow.Visible = true;
             buttonNewApllience.Visible = true;
+            textBox1.Visible = true;
 
         }
 
@@ -102,10 +109,22 @@ namespace Evidence
                     string[] parts = line.Split(',');
                     if (parts.Length >= 1)
                     {
-                        applications.Add(
-                        //             {uniqueCode},{name},{surname},       {dateOfBirth},     {selectedStudy}    {points},                 ,{average}               {acceptedChoice}";
-                        new UApplication(parts[0], parts[1], parts[2], DateTime.Parse(parts[3]), parts[4], Convert.ToDouble(parts[5]), Convert.ToDouble(parts[6]), Convert.ToBoolean(parts[7])));
-                        listBox2.Items.Add($"{parts[1]} {parts[2]} - {parts[4]}");
+                        // Parse parts correctly and assign to variables
+                        string uniqueCode = parts[0];
+                        string name = parts[1];
+                        string surname = parts[2];
+                        DateTime dateOfBirth = DateTime.Parse(parts[3]);
+                        string selectedStudy = parts[4];
+                        double points = Convert.ToDouble(parts[5]);
+                        double average = Convert.ToDouble(parts[6]);
+                        bool acceptedChoice = Convert.ToBoolean(parts[7]);
+
+                        // Create UApplication object with correct parameters
+                        UApplication actual = new UApplication(uniqueCode, name, surname, dateOfBirth, selectedStudy, points, average, acceptedChoice);
+                        applications.Add(actual);
+
+                        // Add item to ListBox
+                        listBox2.Items.Add($"{name} {surname} - {selectedStudy}");
                     }
                 }
             }
@@ -239,8 +258,110 @@ namespace Evidence
 
         private void buttonShowAll_Click(object sender, EventArgs e)
         {
-            Form CustomForm = new CustomMessageBox();
+            Form CustomForm = new CustomMessageBox(applications);
             CustomForm.ShowDialog();
         }
+
+        private void buttonLookUp_Click(object sender, EventArgs e)
+        {
+            if(textBox1.Text != null)
+            {
+                foreach(Application selectedApplication in applications)
+                {
+                    if (textBox1.Text == selectedApplication.Id)
+                    {
+
+                        string educationType = applications.IndexOf(selectedApplication) >= listBox1.Items.Count ? "University" : "High School";
+
+                        StringBuilder infoBuilder = new StringBuilder();
+                        infoBuilder.AppendLine($"Information about student:");
+                        infoBuilder.AppendLine($"ID: {selectedApplication.Id}");
+                        infoBuilder.AppendLine($"Name: {selectedApplication.Name}");
+                        infoBuilder.AppendLine($"Surname: {selectedApplication.Surname}");
+                        infoBuilder.AppendLine($"Date of birth: {selectedApplication.Dob.ToString("dd-MM-yyyy")}");
+                        infoBuilder.AppendLine($"Study: {selectedApplication.Study}");
+                        infoBuilder.AppendLine($"Points: {selectedApplication.Points}");
+
+
+
+                        if (educationType == "University")
+                        {
+                            UApplication universityApplication = (UApplication)selectedApplication;
+                            infoBuilder.AppendLine($"Average: {universityApplication.Average}");
+                        }
+
+                        infoBuilder.AppendLine($"Education Type: {educationType}");
+
+                        MessageBox.Show(infoBuilder.ToString());
+                    }
+
+                }
+                
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonSynchronize_Click(object sender, EventArgs e)
+        {
+            List<string> highSchoolApplications = new List<string>();
+            List<string> universityApplications = new List<string>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string highSchoolQuery = "SELECT Id FROM [dbo].[HighSchool]";
+                string universityQuery = "SELECT Id FROM [dbo].[University]";
+
+                // Retrieve high school application IDs
+                SqlCommand highSchoolCommand = new SqlCommand(highSchoolQuery, connection);
+                SqlDataReader highSchoolReader = highSchoolCommand.ExecuteReader();
+                while (highSchoolReader.Read())
+                {
+                    string id = highSchoolReader.GetString(highSchoolReader.GetOrdinal("Id"));
+                    highSchoolApplications.Add(id);
+                }
+                highSchoolReader.Close();
+
+                // Retrieve university application IDs
+                SqlCommand universityCommand = new SqlCommand(universityQuery, connection);
+                SqlDataReader universityReader = universityCommand.ExecuteReader();
+                while (universityReader.Read())
+                {
+                    string id = universityReader.GetString(universityReader.GetOrdinal("Id"));
+                    universityApplications.Add(id);
+                }
+                universityReader.Close();
+            }
+
+
+            foreach (Application application in applications)
+            {
+                if(highSchoolApplications.Contains(application.Id) || universityApplications.Contains(application.Id))
+                {
+
+                }
+                else
+                {
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        string query = "DELETE FROM [dbo].[HighSchool] WHERE Id = @Id; DELETE FROM [dbo].[University] WHERE Id = @Id";
+                        SqlCommand command = new SqlCommand(query, connection);
+                        command.Parameters.AddWithValue("@Id", application.Id);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+
+        }
+    }
+
+
     }
 }
