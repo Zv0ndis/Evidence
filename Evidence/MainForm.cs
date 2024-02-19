@@ -6,13 +6,14 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Evidence
 {
-   
+
     public enum MessageBoxButtons
     {
         HighSchool, University, Cancel
@@ -20,7 +21,7 @@ namespace Evidence
 
     public partial class MainForm : Form
     {
-        private string connectionString { get { return @"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\zvond\\OneDrive\\Dokumenty\\Applience.mdf;Integrated Security=True;Connect Timeout=30"; } }
+        string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\zvond\\OneDrive\\Dokumenty\\Applience.mdf;Integrated Security=True;Connect Timeout=30";
 
         public List<Application> applications = new List<Application>();
         string filePathHighSchool = "prihlasky_stredni.txt";
@@ -264,9 +265,9 @@ namespace Evidence
 
         private void buttonLookUp_Click(object sender, EventArgs e)
         {
-            if(textBox1.Text != null)
+            if (textBox1.Text != null)
             {
-                foreach(Application selectedApplication in applications)
+                foreach (Application selectedApplication in applications)
                 {
                     if (textBox1.Text == selectedApplication.Id)
                     {
@@ -296,7 +297,7 @@ namespace Evidence
                     }
 
                 }
-                
+
             }
         }
 
@@ -307,61 +308,115 @@ namespace Evidence
 
         private void buttonSynchronize_Click(object sender, EventArgs e)
         {
-            List<string> highSchoolApplications = new List<string>();
-            List<string> universityApplications = new List<string>();
+            List<string> allApplicationIds = new List<string>();
+            foreach (Application selectedApplication in applications)
+            {
+                allApplicationIds.Add(selectedApplication.Id);
+            }
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
-                string highSchoolQuery = "SELECT Id FROM [dbo].[HighSchool]";
-                string universityQuery = "SELECT Id FROM [dbo].[University]";
+                SqlTransaction transaction = connection.BeginTransaction();
 
-                // Retrieve high school application IDs
-                SqlCommand highSchoolCommand = new SqlCommand(highSchoolQuery, connection);
-                SqlDataReader highSchoolReader = highSchoolCommand.ExecuteReader();
-                while (highSchoolReader.Read())
+                // Convert the list of IDs to a comma-separated string
+                string idsString = string.Join(",", allApplicationIds.Select(id => "'" + id + "'"));
+
+                // Delete applications that are not in the list from HighSchool and University tables
+                string deleteQuery = $@"DELETE FROM [dbo].[HighSchool] WHERE Id NOT IN ({idsString})";
+                SqlCommand deleteCommand = new SqlCommand(deleteQuery, connection, transaction);
+                deleteCommand.ExecuteNonQuery();
+
+                deleteQuery = $@"DELETE FROM[dbo].[University] WHERE Id NOT IN({idsString})";
+                deleteCommand = new SqlCommand(deleteQuery, connection, transaction);
+
+
+                foreach (var application in applications)
                 {
-                    string id = highSchoolReader.GetString(highSchoolReader.GetOrdinal("Id"));
-                    highSchoolApplications.Add(id);
-                }
-                highSchoolReader.Close();
+                    // Check if the application exists in HighSchool table
+                    string selectHighSchoolQuery = "SELECT COUNT(*) FROM [dbo].[HighSchool] WHERE Id = @Id";
+                    SqlCommand selectHighSchoolCommand = new SqlCommand(selectHighSchoolQuery, connection, transaction);
+                    selectHighSchoolCommand.Parameters.AddWithValue("@Id", application.Id);
+                    int highSchoolCount = (int)selectHighSchoolCommand.ExecuteScalar();
 
-                // Retrieve university application IDs
-                SqlCommand universityCommand = new SqlCommand(universityQuery, connection);
-                SqlDataReader universityReader = universityCommand.ExecuteReader();
-                while (universityReader.Read())
-                {
-                    string id = universityReader.GetString(universityReader.GetOrdinal("Id"));
-                    universityApplications.Add(id);
-                }
-                universityReader.Close();
-            }
+                    // Check if the application exists in University table
+                    string selectUniversityQuery = "SELECT COUNT(*) FROM [dbo].[University] WHERE Id = @Id";
+                    SqlCommand selectUniversityCommand = new SqlCommand(selectUniversityQuery, connection, transaction);
+                    selectUniversityCommand.Parameters.AddWithValue("@Id", application.Id);
+                    int universityCount = (int)selectUniversityCommand.ExecuteScalar();
 
-
-            foreach (Application application in applications)
-            {
-                if(highSchoolApplications.Contains(application.Id) || universityApplications.Contains(application.Id))
-                {
-
-                }
-                else
-                {
-                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    if (highSchoolCount > 0)
                     {
-                        connection.Open();
+                        // If the application exists in HighSchool, update it
+                        string updateQuery = "UPDATE [dbo].[HighSchool] SET /* columns = values */ WHERE Id = @Id";
+                        SqlCommand updateCommand = new SqlCommand(updateQuery, connection, transaction);
+                        updateCommand.Parameters.AddWithValue("@Id", application.Id);
+                        updateCommand.Parameters.AddWithValue("@Name", application.Name);
+                        updateCommand.Parameters.AddWithValue("@Surname", application.Surname);
+                        updateCommand.Parameters.AddWithValue("@Dob", application.Dob);
+                        updateCommand.Parameters.AddWithValue("@Study", application.Study);
+                        updateCommand.Parameters.AddWithValue("@Points", application.Points);
+                        updateCommand.Parameters.AddWithValue("@Accepted", application.Accepted);
+                        updateCommand.ExecuteNonQuery();
+                    }
+                    else if (application is HSApplication)
+                    {
+                        string insertHighSchoolQuery = "INSERT INTO [dbo].[HighSchool] ([Id], [Name], [Surname], [Dob], [Study], [Points], [Accepted]) " +
+                                                       "VALUES (@Id, @Name, @Surname, @Dob, @Study, @Points, @Accepted)";
+                        SqlCommand insertHighSchoolCommand = new SqlCommand(insertHighSchoolQuery, connection, transaction);
+                        insertHighSchoolCommand.Parameters.AddWithValue("@Id", application.Id);
+                        insertHighSchoolCommand.Parameters.AddWithValue("@Name", application.Name);
+                        insertHighSchoolCommand.Parameters.AddWithValue("@Surname", application.Surname);
+                        insertHighSchoolCommand.Parameters.AddWithValue("@Dob", application.Dob);
+                        insertHighSchoolCommand.Parameters.AddWithValue("@Study", application.Study); // Assuming this is the correct property
+                        insertHighSchoolCommand.Parameters.AddWithValue("@Points", application.Points); // Assuming this is the correct property
+                        insertHighSchoolCommand.Parameters.AddWithValue("@Accepted", application.Accepted); // Assuming this is the correct property
+                        insertHighSchoolCommand.ExecuteNonQuery();
+                    }
 
-                        string query = "DELETE FROM [dbo].[HighSchool] WHERE Id = @Id; DELETE FROM [dbo].[University] WHERE Id = @Id";
-                        SqlCommand command = new SqlCommand(query, connection);
-                        command.Parameters.AddWithValue("@Id", application.Id);
-                        command.ExecuteNonQuery();
+                    if (universityCount > 0)
+                    {
+                        string updateQuery = "UPDATE [dbo].[University] SET [Name] = @Name, [Surname] = @Surname, [Dob] = @Dob, [Study] = @Study, [Points] = @Points, [Average] = @Average, [Accepted] = @Accepted WHERE [Id] = @Id";
+                        SqlCommand updateCommand = new SqlCommand(updateQuery, connection, transaction);
+                        updateCommand.Parameters.AddWithValue("@Id", application.Id);
+                        updateCommand.Parameters.AddWithValue("@Name", application.Name);
+                        updateCommand.Parameters.AddWithValue("@Surname", application.Surname);
+                        updateCommand.Parameters.AddWithValue("@Dob", application.Dob);
+                        updateCommand.Parameters.AddWithValue("@Study", application.Study); // Assuming this is the correct property
+                        updateCommand.Parameters.AddWithValue("@Points", application.Points); // Assuming this is the correct property
+                        updateCommand.Parameters.AddWithValue("@Average", ((UApplication)application).Average); // Assuming this is the correct property
+                        updateCommand.Parameters.AddWithValue("@Accepted", application.Accepted); // Assuming this is the correct property
+                        updateCommand.ExecuteNonQuery();
+                    }
+                    else if (application is UApplication)
+                    {
+                        string insertUniversityQuery = "INSERT INTO [dbo].[University] ([Id], [Name], [Surname], [Dob], [Study], [Points], [Average], [Accepted]) " +
+                                                       "VALUES (@Id, @Name, @Surname, @Dob, @Study, @Points, @Average, @Accepted)";
+                        SqlCommand insertUniversityCommand = new SqlCommand(insertUniversityQuery, connection, transaction);
+                        insertUniversityCommand.Parameters.AddWithValue("@Id", application.Id);
+                        insertUniversityCommand.Parameters.AddWithValue("@Name", application.Name);
+                        insertUniversityCommand.Parameters.AddWithValue("@Surname", application.Surname);
+                        insertUniversityCommand.Parameters.AddWithValue("@Dob", application.Dob);
+                        insertUniversityCommand.Parameters.AddWithValue("@Study", application.Study); // Assuming this is the correct property
+                        insertUniversityCommand.Parameters.AddWithValue("@Points", application.Points); // Assuming this is the correct property
+                        insertUniversityCommand.Parameters.AddWithValue("@Average", ((UApplication)application).Average); // Assuming this is the correct property
+                        insertUniversityCommand.Parameters.AddWithValue("@Accepted", application.Accepted); // Assuming this is the correct property
+                        insertUniversityCommand.ExecuteNonQuery();
                     }
                 }
+                transaction.Commit();
+                //}
+                //catch (Exception ex)
+                //{
+                //    // Rollback the transaction if an exception occurs
+                //    transaction.Rollback();
+                //    MessageBox.Show("An error occurred: " + ex.Message+ ex.Source);
+                //}
+
             }
-
         }
-    }
-
 
     }
+
 }
