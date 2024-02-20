@@ -13,6 +13,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using System.Security.Cryptography;
 using System.Web;
 using static System.Windows.Forms.LinkLabel;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Evidence
 {
@@ -29,10 +30,18 @@ namespace Evidence
             this.filePathUniversity = filePathUniversity;
             this.filePathHighSchool = filePathHighSchool;
             applicationActual = application;
-            fillParametersOfStudent(applicationActual);
-            editMode = true;
+            if(applicationActual is UApplication)
+            {
+                fillParametersOfStudent((UApplication)applicationActual);
+            }
+            else
+            {
+                fillParametersOfStudent(applicationActual);
+            }
 
+            editMode = true;
             groupBox1.Enabled = false;
+
         }
 
         public Form2(string filePathHighSchool, string filePathUniversity)
@@ -52,6 +61,7 @@ namespace Evidence
 
         private void Form2_FormClosed(object sender, FormClosedEventArgs e)
         {
+
         }
 
         private void maskedTextBoxAverage_TextChanged(object sender, EventArgs e)
@@ -61,16 +71,8 @@ namespace Evidence
             if (double.TryParse(text, out double average) && average <= 1.5)
             {
                 radioButtonAccepted.Checked = true;
-                radioButtonDenied.Checked = false;
-                radioButtonAccepted.Enabled = false;
-                radioButtonDenied.Enabled = false;
-            }
-            else
-            {
-                radioButtonAccepted.Checked = false;
-                radioButtonDenied.Checked = false;
-                radioButtonAccepted.Enabled = true;
-                radioButtonDenied.Enabled = true;
+                radioButtonAcceptedChoice = true;
+                groupBox2.Enabled = false;
             }
         }
 
@@ -180,7 +182,15 @@ namespace Evidence
                     string[] parts = line.Split(',');
                     if (parts.Length >= 1 && parts[0] == originalApplication.Id)
                     {
-                        line = $"{originalApplication.Id},{originalApplication.Name},{originalApplication.Surname},{originalApplication.Dob},{originalApplication.Study},{originalApplication.Points},{originalApplication.Accepted}";
+                        if (originalApplication is UApplication)
+                        {
+                            ((UApplication)originalApplication).Average = Convert.ToDouble(maskedTextBoxAverage.Text);
+                            line = $"{originalApplication.Id},{originalApplication.Name},{originalApplication.Surname},{originalApplication.Dob},{originalApplication.Study},{originalApplication.Points},{((UApplication)originalApplication).Average},{originalApplication.Accepted}";
+                        }
+                        else
+                        {
+                            line = $"{originalApplication.Id},{originalApplication.Name},{originalApplication.Surname},{originalApplication.Dob},{originalApplication.Study},{originalApplication.Points},{originalApplication.Accepted}";
+                        }
                     }
                     updatedLines.Add(line);
                 }
@@ -195,14 +205,27 @@ namespace Evidence
             }
         }
 
-        private void fillParametersOfStudent(Application application)
+        private void fillParametersOfStudent(Application apps)
         {
-            Application apps = application;
             textBoxName.Text = apps.Name;
             textBoxSurname.Text = apps.Surname;
             dateTimePickerDoB.Value = apps.Dob.Date;
             comboBoxStudy.Text = apps.Study;
-            maskedTextBoxPoints.Text = apps.Points.ToString();
+
+
+            if (apps is UApplication)
+            {
+                UApplication application = (UApplication)apps;
+                radioButtonUniversity.Checked = true;
+                maskedTextBoxAverage.Visible = true;
+                maskedTextBoxPoints.Text = application.Points.ToString("000");
+                maskedTextBoxAverage.Text = application.Average.ToString("0.0");
+            }
+            else
+            {
+                maskedTextBoxPoints.Text = apps.Points.ToString();
+                radioButtonSecondarySchool.Checked = true;
+            }
 
             if (apps.Accepted)
             {
