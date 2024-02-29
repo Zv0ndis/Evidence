@@ -63,8 +63,14 @@ namespace Evidence
                 {
                     if (application is HSApplication && application.Accepted) stringBuilder.AppendLine($"{application.Name} {application.Surname} - {application.Study}");
                 }
-
-                MessageBox.Show(stringBuilder.ToString());
+                if (stringBuilder.Length > 0)
+                {
+                    MessageBox.Show(stringBuilder.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("No students are accepted.");
+                }
             }
         }
 
@@ -78,7 +84,15 @@ namespace Evidence
                     if (application is UApplication && application.Accepted) stringBuilder.AppendLine($"{application.Name} {application.Surname} - {application.Study}");
                 }
 
-                MessageBox.Show(stringBuilder.ToString());
+                if (stringBuilder.Length > 0)
+                {
+                    MessageBox.Show(stringBuilder.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("No students are accepted.");
+                }
+
             }
         }
     }

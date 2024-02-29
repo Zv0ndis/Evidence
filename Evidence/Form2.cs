@@ -21,7 +21,6 @@ namespace Evidence
     public partial class Form2 : Form
     {
         private bool editMode = false;
-        private bool radioButtonAcceptedChoice;
         private string filePathHighSchool, filePathUniversity;
         private Application applicationActual;
 
@@ -56,7 +55,6 @@ namespace Evidence
         {
             dateTimePickerDoB.Format = DateTimePickerFormat.Short;
             dateTimePickerDoB.CustomFormat = "dd/MM/yyyy";
-            radioButtonSecondarySchool.Checked = true;
             UniqueCodeGenerator.LoadExistingCodes(filePathHighSchool, filePathUniversity);
         }
 
@@ -72,7 +70,6 @@ namespace Evidence
             if (double.TryParse(text, out double average) && average <= 1.5)
             {
                 radioButtonAccepted.Checked = true;
-                radioButtonAcceptedChoice = true;
                 groupBox2.Enabled = false;
             }
         }
@@ -92,18 +89,12 @@ namespace Evidence
 
         private void radioButtonAccepted_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonAccepted.Checked)
-            {
-                radioButtonAcceptedChoice = true;
-            }
+
         }
 
         private void radioButtonDenied_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonDenied.Checked)
-            {
-                radioButtonAcceptedChoice = false;
-            }
+
         }
 
         private void radioButtonSecondarySchool_CheckedChanged(object sender, EventArgs e)
@@ -130,7 +121,8 @@ namespace Evidence
             string surname = textBoxSurname.Text;
             DateTime dateOfBirth = dateTimePickerDoB.Value;
             string selectedStudy = comboBoxStudy.SelectedItem.ToString();
-            bool acceptedChoice = radioButtonAcceptedChoice;
+            bool acceptedChoice = radioButtonAccepted.Checked ? true:false;
+
             double points;
 
             if (double.TryParse(maskedTextBoxPoints.Text, out double hodnota))
@@ -165,7 +157,7 @@ namespace Evidence
             originalApplication.Surname = textBoxSurname.Text;
             originalApplication.Dob = dateTimePickerDoB.Value;
             originalApplication.Study = comboBoxStudy.SelectedItem.ToString();
-            originalApplication.Accepted = radioButtonAcceptedChoice;
+            originalApplication.Accepted = radioButtonAccepted.Checked ? true : false;
 
             if (double.TryParse(maskedTextBoxPoints.Text, out double points))
             {
@@ -258,7 +250,7 @@ namespace Evidence
                     string line;
                     while ((line = sr.ReadLine()) != null)
                     {
-                        string[] parts = line.Split(',');
+                        string[] parts = line.Split(';');
                         if (parts.Length >= 1)
                         {
                             string code = parts[0];
@@ -275,7 +267,7 @@ namespace Evidence
                     string line;
                     while ((line = sr.ReadLine()) != null)
                     {
-                        string[] parts = line.Split(',');
+                        string[] parts = line.Split(';');
                         if (parts.Length >= 1)
                         {
                             string code = parts[0];

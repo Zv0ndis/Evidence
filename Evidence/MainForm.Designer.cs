@@ -46,11 +46,7 @@
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showAcceptedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lookUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.universityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.synchronizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.showAcceptedToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.lookUpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -119,7 +115,6 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.applicationsToolStripMenuItem,
-            this.universityToolStripMenuItem,
             this.synchronizeToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -139,14 +134,14 @@
             // loadFilesToolStripMenuItem
             // 
             this.loadFilesToolStripMenuItem.Name = "loadFilesToolStripMenuItem";
-            this.loadFilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadFilesToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.loadFilesToolStripMenuItem.Text = "Load Files";
             this.loadFilesToolStripMenuItem.Click += new System.EventHandler(this.loadFilesToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.closeToolStripMenuItem.Text = "Close ";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
@@ -166,54 +161,44 @@
             // newApplicationToolStripMenuItem
             // 
             this.newApplicationToolStripMenuItem.Name = "newApplicationToolStripMenuItem";
-            this.newApplicationToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.newApplicationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newApplicationToolStripMenuItem.Text = "New Application";
             this.newApplicationToolStripMenuItem.Click += new System.EventHandler(this.newApplicationToolStripMenuItem_Click);
             // 
             // editApplicationToolStripMenuItem
             // 
             this.editApplicationToolStripMenuItem.Name = "editApplicationToolStripMenuItem";
-            this.editApplicationToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.editApplicationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editApplicationToolStripMenuItem.Text = "Edit Application";
             this.editApplicationToolStripMenuItem.Click += new System.EventHandler(this.editApplicationToolStripMenuItem_Click);
             // 
             // deleteApplicationToolStripMenuItem
             // 
             this.deleteApplicationToolStripMenuItem.Name = "deleteApplicationToolStripMenuItem";
-            this.deleteApplicationToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.deleteApplicationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteApplicationToolStripMenuItem.Text = "Delete Application";
             this.deleteApplicationToolStripMenuItem.Click += new System.EventHandler(this.deleteApplicationToolStripMenuItem_Click);
             // 
             // showToolStripMenuItem
             // 
             this.showToolStripMenuItem.Name = "showToolStripMenuItem";
-            this.showToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.showToolStripMenuItem.Text = "Show";
             this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
             // 
             // showAcceptedToolStripMenuItem
             // 
             this.showAcceptedToolStripMenuItem.Name = "showAcceptedToolStripMenuItem";
-            this.showAcceptedToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.showAcceptedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.showAcceptedToolStripMenuItem.Text = "Show Accepted";
             this.showAcceptedToolStripMenuItem.Click += new System.EventHandler(this.showAcceptedToolStripMenuItem_Click);
             // 
             // lookUpToolStripMenuItem
             // 
             this.lookUpToolStripMenuItem.Name = "lookUpToolStripMenuItem";
-            this.lookUpToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.lookUpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.lookUpToolStripMenuItem.Text = "LookUp";
             this.lookUpToolStripMenuItem.Click += new System.EventHandler(this.lookUpToolStripMenuItem_Click);
-            // 
-            // universityToolStripMenuItem
-            // 
-            this.universityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showToolStripMenuItem1,
-            this.showAcceptedToolStripMenuItem1,
-            this.lookUpToolStripMenuItem1});
-            this.universityToolStripMenuItem.Name = "universityToolStripMenuItem";
-            this.universityToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
-            this.universityToolStripMenuItem.Text = "University";
             // 
             // synchronizeToolStripMenuItem
             // 
@@ -221,25 +206,6 @@
             this.synchronizeToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.synchronizeToolStripMenuItem.Text = "Synchronize";
             this.synchronizeToolStripMenuItem.Click += new System.EventHandler(this.synchronizeToolStripMenuItem_Click);
-            // 
-            // showToolStripMenuItem1
-            // 
-            this.showToolStripMenuItem1.Name = "showToolStripMenuItem1";
-            this.showToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.showToolStripMenuItem1.Text = "Show";
-            this.showToolStripMenuItem1.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
-            // 
-            // showAcceptedToolStripMenuItem1
-            // 
-            this.showAcceptedToolStripMenuItem1.Name = "showAcceptedToolStripMenuItem1";
-            this.showAcceptedToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.showAcceptedToolStripMenuItem1.Text = "Show Accepted";
-            // 
-            // lookUpToolStripMenuItem1
-            // 
-            this.lookUpToolStripMenuItem1.Name = "lookUpToolStripMenuItem1";
-            this.lookUpToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.lookUpToolStripMenuItem1.Text = "Look up";
             // 
             // MainForm
             // 
@@ -282,11 +248,7 @@
         private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showAcceptedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lookUpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem universityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem synchronizeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem showAcceptedToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem lookUpToolStripMenuItem1;
     }
 }
 

@@ -22,7 +22,7 @@ namespace Evidence
 
     public partial class MainForm : Form
     {
-        string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\zvond\\OneDrive\\Dokumenty\\Applience.mdf;Integrated Security=True;Connect Timeout=30";
+        string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\zvond\\source\\repos\\Zv0ndis\\Evidence\\Evidence\\bin\\Debug\\Applience.mdf;Integrated Security=True;Connect Timeout=30";
 
         public List<Application> applications = new List<Application>();
         string filePathHighSchool = "prihlasky_stredni.txt";
@@ -75,113 +75,105 @@ namespace Evidence
 
         private void synchronizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-        List<string> allApplicationIds = new List<string>();
-        foreach (Application selectedApplication in applications)
-        {
-            allApplicationIds.Add(selectedApplication.Id);
-        }
+            List<string> allApplicationIds = new List<string>();
+            foreach (Application selectedApplication in applications)
+            {
+                allApplicationIds.Add(selectedApplication.Id);
+            }
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
                 SqlTransaction transaction = connection.BeginTransaction();
-                try
+
+                // Convert the list of IDs to a comma-separated string
+                string idsString = string.Join(",", allApplicationIds.Select(id => "'" + id + "'"));
+
+                // Delete applications that are not in the list from HighSchool and University tables
+                string deleteQuery = $@"DELETE FROM [dbo].[HighSchool] WHERE Id NOT IN ({idsString})";
+                SqlCommand deleteCommand = new SqlCommand(deleteQuery, connection, transaction);
+                deleteCommand.ExecuteNonQuery();
+
+                deleteQuery = $@"DELETE FROM[dbo].[University] WHERE Id NOT IN({idsString})";
+                deleteCommand = new SqlCommand(deleteQuery, connection, transaction);
+                deleteCommand.ExecuteNonQuery();
+
+                foreach (var application in applications)
                 {
-                    // Convert the list of IDs to a comma-separated string
-                    string idsString = string.Join(",", allApplicationIds.Select(id => "'" + id + "'"));
+                    // Check if the application exists in HighSchool table
+                    string selectHighSchoolQuery = "SELECT COUNT(*) FROM [dbo].[HighSchool] WHERE Id = @Id";
+                    SqlCommand selectHighSchoolCommand = new SqlCommand(selectHighSchoolQuery, connection, transaction);
+                    selectHighSchoolCommand.Parameters.AddWithValue("@Id", application.Id);
+                    int highSchoolCount = (int)selectHighSchoolCommand.ExecuteScalar();
 
-                    // Delete applications that are not in the list from HighSchool and University tables
-                    string deleteQuery = $@"DELETE FROM [dbo].[HighSchool] WHERE Id NOT IN ({idsString})";
-                    SqlCommand deleteCommand = new SqlCommand(deleteQuery, connection, transaction);
-                    deleteCommand.ExecuteNonQuery();
+                    // Check if the application exists in University table
+                    string selectUniversityQuery = "SELECT COUNT(*) FROM [dbo].[University] WHERE Id = @Id";
+                    SqlCommand selectUniversityCommand = new SqlCommand(selectUniversityQuery, connection, transaction);
+                    selectUniversityCommand.Parameters.AddWithValue("@Id", application.Id);
+                    int universityCount = (int)selectUniversityCommand.ExecuteScalar();
 
-                    deleteQuery = $@"DELETE FROM[dbo].[University] WHERE Id NOT IN({idsString})";
-                    deleteCommand = new SqlCommand(deleteQuery, connection, transaction);
-
-
-                    foreach (var application in applications)
+                    if (highSchoolCount > 0)
                     {
-                        // Check if the application exists in HighSchool table
-                        string selectHighSchoolQuery = "SELECT COUNT(*) FROM [dbo].[HighSchool] WHERE Id = @Id";
-                        SqlCommand selectHighSchoolCommand = new SqlCommand(selectHighSchoolQuery, connection, transaction);
-                        selectHighSchoolCommand.Parameters.AddWithValue("@Id", application.Id);
-                        int highSchoolCount = (int)selectHighSchoolCommand.ExecuteScalar();
+                        // If the application exists in HighSchool, update it
+                        string updateQuery = "UPDATE [dbo].[HighSchool] SET [Name] = @Name, [Surname] = @Surname, [Dob] = @Dob, [Study] = @Study, [Points] = @Points, [Accepted] = @Accepted WHERE [Id] = @Id"; ;
+                        SqlCommand updateCommand = new SqlCommand(updateQuery, connection, transaction);
+                        updateCommand.Parameters.AddWithValue("@Id", application.Id);
+                        updateCommand.Parameters.AddWithValue("@Name", application.Name);
+                        updateCommand.Parameters.AddWithValue("@Surname", application.Surname);
+                        updateCommand.Parameters.AddWithValue("@Dob", application.Dob);
+                        updateCommand.Parameters.AddWithValue("@Study", application.Study);
+                        updateCommand.Parameters.AddWithValue("@Points", application.Points);
+                        updateCommand.Parameters.AddWithValue("@Accepted", application.Accepted);
+                        updateCommand.ExecuteNonQuery();
+                    }
+                    else if (application is HSApplication)
+                    {
+                        string insertHighSchoolQuery = "INSERT INTO [dbo].[HighSchool] ([Id], [Name], [Surname], [Dob], [Study], [Points], [Accepted]) " +
+                                                       "VALUES (@Id, @Name, @Surname, @Dob, @Study, @Points, @Accepted)";
+                        SqlCommand insertHighSchoolCommand = new SqlCommand(insertHighSchoolQuery, connection, transaction);
+                        insertHighSchoolCommand.Parameters.AddWithValue("@Id", application.Id);
+                        insertHighSchoolCommand.Parameters.AddWithValue("@Name", application.Name);
+                        insertHighSchoolCommand.Parameters.AddWithValue("@Surname", application.Surname);
+                        insertHighSchoolCommand.Parameters.AddWithValue("@Dob", application.Dob);
+                        insertHighSchoolCommand.Parameters.AddWithValue("@Study", application.Study); // Assuming this is the correct property
+                        insertHighSchoolCommand.Parameters.AddWithValue("@Points", application.Points); // Assuming this is the correct property
+                        insertHighSchoolCommand.Parameters.AddWithValue("@Accepted", application.Accepted); // Assuming this is the correct property
+                        insertHighSchoolCommand.ExecuteNonQuery();
+                    }
 
-                        // Check if the application exists in University table
-                        string selectUniversityQuery = "SELECT COUNT(*) FROM [dbo].[University] WHERE Id = @Id";
-                        SqlCommand selectUniversityCommand = new SqlCommand(selectUniversityQuery, connection, transaction);
-                        selectUniversityCommand.Parameters.AddWithValue("@Id", application.Id);
-                        int universityCount = (int)selectUniversityCommand.ExecuteScalar();
-
-                        if (highSchoolCount > 0)
-                        {
-                            // If the application exists in HighSchool, update it
-                            string updateQuery = "UPDATE [dbo].[HighSchool] SET /* columns = values */ WHERE Id = @Id";
-                            SqlCommand updateCommand = new SqlCommand(updateQuery, connection, transaction);
-                            updateCommand.Parameters.AddWithValue("@Id", application.Id);
-                            updateCommand.Parameters.AddWithValue("@Name", application.Name);
-                            updateCommand.Parameters.AddWithValue("@Surname", application.Surname);
-                            updateCommand.Parameters.AddWithValue("@Dob", application.Dob);
-                            updateCommand.Parameters.AddWithValue("@Study", application.Study);
-                            updateCommand.Parameters.AddWithValue("@Points", application.Points);
-                            updateCommand.Parameters.AddWithValue("@Accepted", application.Accepted);
-                            updateCommand.ExecuteNonQuery();
-                        }
-                        else if (application is HSApplication)
-                        {
-                            string insertHighSchoolQuery = "INSERT INTO [dbo].[HighSchool] ([Id], [Name], [Surname], [Dob], [Study], [Points], [Accepted]) " +
-                                                           "VALUES (@Id, @Name, @Surname, @Dob, @Study, @Points, @Accepted)";
-                            SqlCommand insertHighSchoolCommand = new SqlCommand(insertHighSchoolQuery, connection, transaction);
-                            insertHighSchoolCommand.Parameters.AddWithValue("@Id", application.Id);
-                            insertHighSchoolCommand.Parameters.AddWithValue("@Name", application.Name);
-                            insertHighSchoolCommand.Parameters.AddWithValue("@Surname", application.Surname);
-                            insertHighSchoolCommand.Parameters.AddWithValue("@Dob", application.Dob);
-                            insertHighSchoolCommand.Parameters.AddWithValue("@Study", application.Study); // Assuming this is the correct property
-                            insertHighSchoolCommand.Parameters.AddWithValue("@Points", application.Points); // Assuming this is the correct property
-                            insertHighSchoolCommand.Parameters.AddWithValue("@Accepted", application.Accepted); // Assuming this is the correct property
-                            insertHighSchoolCommand.ExecuteNonQuery();
-                        }
-
-                        if (universityCount > 0)
-                        {
-                            string updateQuery = "UPDATE [dbo].[University] SET [Name] = @Name, [Surname] = @Surname, [Dob] = @Dob, [Study] = @Study, [Points] = @Points, [Average] = @Average, [Accepted] = @Accepted WHERE [Id] = @Id";
-                            SqlCommand updateCommand = new SqlCommand(updateQuery, connection, transaction);
-                            updateCommand.Parameters.AddWithValue("@Id", application.Id);
-                            updateCommand.Parameters.AddWithValue("@Name", application.Name);
-                            updateCommand.Parameters.AddWithValue("@Surname", application.Surname);
-                            updateCommand.Parameters.AddWithValue("@Dob", application.Dob);
-                            updateCommand.Parameters.AddWithValue("@Study", application.Study); // Assuming this is the correct property
-                            updateCommand.Parameters.AddWithValue("@Points", application.Points); // Assuming this is the correct property
-                            updateCommand.Parameters.AddWithValue("@Average", ((UApplication)application).Average); // Assuming this is the correct property
-                            updateCommand.Parameters.AddWithValue("@Accepted", application.Accepted); // Assuming this is the correct property
-                            updateCommand.ExecuteNonQuery();
-                        }
-                        else if (application is UApplication)
-                        {
-                            string insertUniversityQuery = "INSERT INTO [dbo].[University] ([Id], [Name], [Surname], [Dob], [Study], [Points], [Average], [Accepted]) " +
-                                                           "VALUES (@Id, @Name, @Surname, @Dob, @Study, @Points, @Average, @Accepted)";
-                            SqlCommand insertUniversityCommand = new SqlCommand(insertUniversityQuery, connection, transaction);
-                            insertUniversityCommand.Parameters.AddWithValue("@Id", application.Id);
-                            insertUniversityCommand.Parameters.AddWithValue("@Name", application.Name);
-                            insertUniversityCommand.Parameters.AddWithValue("@Surname", application.Surname);
-                            insertUniversityCommand.Parameters.AddWithValue("@Dob", application.Dob);
-                            insertUniversityCommand.Parameters.AddWithValue("@Study", application.Study); // Assuming this is the correct property
-                            insertUniversityCommand.Parameters.AddWithValue("@Points", application.Points); // Assuming this is the correct property
-                            insertUniversityCommand.Parameters.AddWithValue("@Average", ((UApplication)application).Average); // Assuming this is the correct property
-                            insertUniversityCommand.Parameters.AddWithValue("@Accepted", application.Accepted); // Assuming this is the correct property
-                            insertUniversityCommand.ExecuteNonQuery();
-                        }
-                        transaction.Commit();
-
+                    if (universityCount > 0)
+                    {
+                        string updateQuery = "UPDATE [dbo].[University] SET [Name] = @Name, [Surname] = @Surname, [Dob] = @Dob, [Study] = @Study, [Points] = @Points, [Average] = @Average, [Accepted] = @Accepted WHERE [Id] = @Id";
+                        SqlCommand updateCommand = new SqlCommand(updateQuery, connection, transaction);
+                        updateCommand.Parameters.AddWithValue("@Id", application.Id);
+                        updateCommand.Parameters.AddWithValue("@Name", application.Name);
+                        updateCommand.Parameters.AddWithValue("@Surname", application.Surname);
+                        updateCommand.Parameters.AddWithValue("@Dob", application.Dob);
+                        updateCommand.Parameters.AddWithValue("@Study", application.Study); // Assuming this is the correct property
+                        updateCommand.Parameters.AddWithValue("@Points", application.Points); // Assuming this is the correct property
+                        updateCommand.Parameters.AddWithValue("@Average", ((UApplication)application).Average); // Assuming this is the correct property
+                        updateCommand.Parameters.AddWithValue("@Accepted", application.Accepted); // Assuming this is the correct property
+                        updateCommand.ExecuteNonQuery();
+                    }
+                    else if (application is UApplication)
+                    {
+                        string insertUniversityQuery = "INSERT INTO [dbo].[University] ([Id], [Name], [Surname], [Dob], [Study], [Points], [Average], [Accepted]) " +
+                                                       "VALUES (@Id, @Name, @Surname, @Dob, @Study, @Points, @Average, @Accepted)";
+                        SqlCommand insertUniversityCommand = new SqlCommand(insertUniversityQuery, connection, transaction);
+                        insertUniversityCommand.Parameters.AddWithValue("@Id", application.Id);
+                        insertUniversityCommand.Parameters.AddWithValue("@Name", application.Name);
+                        insertUniversityCommand.Parameters.AddWithValue("@Surname", application.Surname);
+                        insertUniversityCommand.Parameters.AddWithValue("@Dob", application.Dob);
+                        insertUniversityCommand.Parameters.AddWithValue("@Study", application.Study); // Assuming this is the correct property
+                        insertUniversityCommand.Parameters.AddWithValue("@Points", application.Points); // Assuming this is the correct property
+                        insertUniversityCommand.Parameters.AddWithValue("@Average", ((UApplication)application).Average); // Assuming this is the correct property
+                        insertUniversityCommand.Parameters.AddWithValue("@Accepted", application.Accepted); // Assuming this is the correct property
+                        insertUniversityCommand.ExecuteNonQuery();
                     }
                 }
-                catch (Exception ex)
-                {
-                    // Rollback the transaction if an exception occurs
-                    transaction.Rollback();
-                    MessageBox.Show("An error occurred: " + ex.Message + ex.Source);
-                }
+
+                transaction.Commit();
             }
 
         }
@@ -214,6 +206,7 @@ namespace Evidence
                             infoBuilder.AppendLine($"Average: {universityApplication.Average}");
                         }
 
+                        infoBuilder.AppendLine($"Accepted: {selectedApplication.Accepted}");
                         infoBuilder.AppendLine($"Education Type: {educationType}");
 
                         MessageBox.Show(infoBuilder.ToString());
@@ -233,62 +226,39 @@ namespace Evidence
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int selectedIndex = IndexSelect();
-            switch (sender as ToolStripMenuItem)
+
+            if (selectedIndex >= 0)
             {
-                case var menuItem when menuItem == showToolStripMenuItem:
-                    if (selectedIndex >= 0)
-                    {
-                        Application selectedApplication = applications[selectedIndex];
+                Application selectedApplication = applications[selectedIndex];
 
-                        string educationType = selectedIndex >= listBox1.Items.Count ? "University" : "High School";
+                string educationType = selectedIndex >= listBox1.Items.Count ? "University" : "High School";
 
-                        StringBuilder infoBuilder = new StringBuilder();
-                        infoBuilder.AppendLine($"Information about student:");
-                        infoBuilder.AppendLine($"Name: {selectedApplication.Name}");
-                        infoBuilder.AppendLine($"Surname: {selectedApplication.Surname}");
-                        infoBuilder.AppendLine($"Date of birth: {selectedApplication.Dob.ToString("dd-MM-yyyy")}");
-                        infoBuilder.AppendLine($"Study: {selectedApplication.Study}");
-                        infoBuilder.AppendLine($"Points: {selectedApplication.Points}");
-                        infoBuilder.AppendLine($"Education Type: {educationType}");
+                StringBuilder infoBuilder = new StringBuilder();
+                infoBuilder.AppendLine($"Information about student:");
+                infoBuilder.AppendLine($"ID: {selectedApplication.Id}");
+                infoBuilder.AppendLine($"Name: {selectedApplication.Name}");
+                infoBuilder.AppendLine($"Surname: {selectedApplication.Surname}");
+                infoBuilder.AppendLine($"Date of birth: {selectedApplication.Dob.ToString("dd-MM-yyyy")}");
+                infoBuilder.AppendLine($"Study: {selectedApplication.Study}");
+                infoBuilder.AppendLine($"Points: {selectedApplication.Points}");
 
-                        MessageBox.Show(infoBuilder.ToString());
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please select a student.");
-                    }
-                    break;
+                if (selectedApplication is UApplication universityApplication)
+                {
+                    infoBuilder.AppendLine($"Average: {universityApplication.Average}");
+                }
 
-                case var menuItem when menuItem == showToolStripMenuItem1:
-                    if (selectedIndex >= 0)
-                    {
-                        Application selectedApplication = applications[selectedIndex];
+                infoBuilder.AppendLine($"Accepted: {selectedApplication.Accepted}");
+                infoBuilder.AppendLine($"Education Type: {educationType}");
 
-                        string educationType = selectedIndex >= listBox1.Items.Count ? "University" : "High School";
-
-                        StringBuilder infoBuilder = new StringBuilder();
-                        infoBuilder.AppendLine($"Information about student:");
-                        infoBuilder.AppendLine($"Name: {selectedApplication.Name}");
-                        infoBuilder.AppendLine($"Surname: {selectedApplication.Surname}");
-                        infoBuilder.AppendLine($"Date of birth: {selectedApplication.Dob.ToString("dd-MM-yyyy")}");
-                        infoBuilder.AppendLine($"Study: {selectedApplication.Study}");
-                        infoBuilder.AppendLine($"Points: {selectedApplication.Points}");
-
-                        if (selectedApplication is UApplication universityApplication)
-                        {
-                            infoBuilder.AppendLine($"Average: {universityApplication.Average}");
-                        }
-
-                        infoBuilder.AppendLine($"Education Type: {educationType}");
-
-                        MessageBox.Show(infoBuilder.ToString());
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please select a student.");
-                    }
-                    break;
+                MessageBox.Show(infoBuilder.ToString());
             }
+            else
+            {
+                MessageBox.Show("Please select a student a student from Listbox University");
+            }
+
+
+
         }
 
         private void deleteApplicationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -305,7 +275,7 @@ namespace Evidence
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    string[] parts = line.Split(',');
+                    string[] parts = line.Split(';');
                     if (parts.Length >= 1 && parts[0] != applications[selectedIndex].Id)
                     {
                         updatedLines.Add(line);
@@ -364,7 +334,7 @@ namespace Evidence
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    string[] parts = line.Split(',');
+                    string[] parts = line.Split(';');
                     if (parts.Length >= 1)
                     {
                         applications.Add(
@@ -381,7 +351,7 @@ namespace Evidence
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    string[] parts = line.Split(',');
+                    string[] parts = line.Split(';');
                     if (parts.Length >= 1)
                     {
                         // Parse parts correctly and assign to variables
@@ -403,6 +373,12 @@ namespace Evidence
                     }
                 }
             }
+        }
+
+        private void showAcceptedToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Form CustomForm = new CustomMessageBox(applications);
+            CustomForm.ShowDialog();
         }
     }
 
