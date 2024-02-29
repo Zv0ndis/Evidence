@@ -28,142 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonFile = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.buttonApplience = new System.Windows.Forms.Button();
-            this.buttonSynchronize = new System.Windows.Forms.Button();
-            this.buttonFileDialog = new System.Windows.Forms.Button();
-            this.buttonCloseFile = new System.Windows.Forms.Button();
-            this.buttonNewApllience = new System.Windows.Forms.Button();
-            this.buttonEdit = new System.Windows.Forms.Button();
-            this.buttonDelete = new System.Windows.Forms.Button();
-            this.buttonShow = new System.Windows.Forms.Button();
-            this.buttonShowAll = new System.Windows.Forms.Button();
-            this.buttonLookUp = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.applicationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showAcceptedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lookUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.universityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.synchronizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.showAcceptedToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.lookUpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // buttonFile
-            // 
-            this.buttonFile.Location = new System.Drawing.Point(21, 24);
-            this.buttonFile.Name = "buttonFile";
-            this.buttonFile.Size = new System.Drawing.Size(75, 23);
-            this.buttonFile.TabIndex = 1;
-            this.buttonFile.Text = "File";
-            this.buttonFile.UseVisualStyleBackColor = true;
-            this.buttonFile.Click += new System.EventHandler(this.buttonFile_Click);
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // buttonApplience
-            // 
-            this.buttonApplience.Location = new System.Drawing.Point(21, 53);
-            this.buttonApplience.Name = "buttonApplience";
-            this.buttonApplience.Size = new System.Drawing.Size(75, 23);
-            this.buttonApplience.TabIndex = 2;
-            this.buttonApplience.Text = "Applience";
-            this.buttonApplience.UseVisualStyleBackColor = true;
-            this.buttonApplience.Click += new System.EventHandler(this.buttonApplience_Click);
-            // 
-            // buttonSynchronize
-            // 
-            this.buttonSynchronize.Location = new System.Drawing.Point(21, 81);
-            this.buttonSynchronize.Name = "buttonSynchronize";
-            this.buttonSynchronize.Size = new System.Drawing.Size(75, 23);
-            this.buttonSynchronize.TabIndex = 4;
-            this.buttonSynchronize.Text = "Synchronize";
-            this.buttonSynchronize.UseVisualStyleBackColor = true;
-            this.buttonSynchronize.Click += new System.EventHandler(this.buttonSynchronize_Click);
-            // 
-            // buttonFileDialog
-            // 
-            this.buttonFileDialog.Location = new System.Drawing.Point(102, 24);
-            this.buttonFileDialog.Name = "buttonFileDialog";
-            this.buttonFileDialog.Size = new System.Drawing.Size(89, 23);
-            this.buttonFileDialog.TabIndex = 5;
-            this.buttonFileDialog.Text = "Load File";
-            this.buttonFileDialog.UseVisualStyleBackColor = true;
-            this.buttonFileDialog.Visible = false;
-            this.buttonFileDialog.Click += new System.EventHandler(this.buttonFileDialog_Click);
-            // 
-            // buttonCloseFile
-            // 
-            this.buttonCloseFile.Location = new System.Drawing.Point(102, 53);
-            this.buttonCloseFile.Name = "buttonCloseFile";
-            this.buttonCloseFile.Size = new System.Drawing.Size(89, 23);
-            this.buttonCloseFile.TabIndex = 6;
-            this.buttonCloseFile.Text = "Close File";
-            this.buttonCloseFile.UseVisualStyleBackColor = true;
-            this.buttonCloseFile.Visible = false;
-            this.buttonCloseFile.Click += new System.EventHandler(this.buttonCloseFile_Click);
-            // 
-            // buttonNewApllience
-            // 
-            this.buttonNewApllience.Location = new System.Drawing.Point(102, 53);
-            this.buttonNewApllience.Name = "buttonNewApllience";
-            this.buttonNewApllience.Size = new System.Drawing.Size(89, 23);
-            this.buttonNewApllience.TabIndex = 7;
-            this.buttonNewApllience.Text = "New Apllience";
-            this.buttonNewApllience.UseVisualStyleBackColor = true;
-            this.buttonNewApllience.Click += new System.EventHandler(this.buttonNewApllience_Click);
-            // 
-            // buttonEdit
-            // 
-            this.buttonEdit.Location = new System.Drawing.Point(102, 82);
-            this.buttonEdit.Name = "buttonEdit";
-            this.buttonEdit.Size = new System.Drawing.Size(89, 23);
-            this.buttonEdit.TabIndex = 8;
-            this.buttonEdit.Text = "Edit";
-            this.buttonEdit.UseVisualStyleBackColor = true;
-            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
-            // 
-            // buttonDelete
-            // 
-            this.buttonDelete.Location = new System.Drawing.Point(102, 111);
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(89, 23);
-            this.buttonDelete.TabIndex = 9;
-            this.buttonDelete.Text = "Delete";
-            this.buttonDelete.UseVisualStyleBackColor = true;
-            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
-            // 
-            // buttonShow
-            // 
-            this.buttonShow.Location = new System.Drawing.Point(102, 140);
-            this.buttonShow.Name = "buttonShow";
-            this.buttonShow.Size = new System.Drawing.Size(89, 23);
-            this.buttonShow.TabIndex = 10;
-            this.buttonShow.Text = "Show";
-            this.buttonShow.UseVisualStyleBackColor = true;
-            this.buttonShow.Click += new System.EventHandler(this.buttonShow_Click);
-            // 
-            // buttonShowAll
-            // 
-            this.buttonShowAll.Location = new System.Drawing.Point(102, 169);
-            this.buttonShowAll.Name = "buttonShowAll";
-            this.buttonShowAll.Size = new System.Drawing.Size(89, 23);
-            this.buttonShowAll.TabIndex = 11;
-            this.buttonShowAll.Text = "Show All";
-            this.buttonShowAll.UseVisualStyleBackColor = true;
-            this.buttonShowAll.Click += new System.EventHandler(this.buttonShowAll_Click);
-            // 
-            // buttonLookUp
-            // 
-            this.buttonLookUp.Location = new System.Drawing.Point(102, 224);
-            this.buttonLookUp.Name = "buttonLookUp";
-            this.buttonLookUp.Size = new System.Drawing.Size(89, 23);
-            this.buttonLookUp.TabIndex = 12;
-            this.buttonLookUp.Text = "Look Up";
-            this.buttonLookUp.UseVisualStyleBackColor = true;
-            this.buttonLookUp.Click += new System.EventHandler(this.buttonLookUp_Click);
             // 
             // listBox1
             // 
@@ -177,7 +71,7 @@
             // listBox2
             // 
             this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(209, 15);
+            this.listBox2.Location = new System.Drawing.Point(212, 15);
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(182, 277);
             this.listBox2.TabIndex = 14;
@@ -186,7 +80,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(391, 37);
+            this.label1.Location = new System.Drawing.Point(15, 36);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 13);
             this.label1.TabIndex = 15;
@@ -195,7 +89,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(594, 37);
+            this.label2.Location = new System.Drawing.Point(218, 36);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(67, 13);
             this.label2.TabIndex = 16;
@@ -206,7 +100,7 @@
             this.groupBox1.Controls.Add(this.listBox1);
             this.groupBox1.Controls.Add(this.listBox2);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox1.Location = new System.Drawing.Point(388, 53);
+            this.groupBox1.Location = new System.Drawing.Point(12, 52);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(400, 301);
             this.groupBox1.TabIndex = 17;
@@ -214,60 +108,185 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(102, 198);
+            this.textBox1.Location = new System.Drawing.Point(12, 359);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(182, 20);
+            this.textBox1.Size = new System.Drawing.Size(400, 20);
             this.textBox1.TabIndex = 18;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.applicationsToolStripMenuItem,
+            this.universityToolStripMenuItem,
+            this.synchronizeToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(434, 24);
+            this.menuStrip1.TabIndex = 19;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadFilesToolStripMenuItem,
+            this.closeToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // loadFilesToolStripMenuItem
+            // 
+            this.loadFilesToolStripMenuItem.Name = "loadFilesToolStripMenuItem";
+            this.loadFilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadFilesToolStripMenuItem.Text = "Load Files";
+            this.loadFilesToolStripMenuItem.Click += new System.EventHandler(this.loadFilesToolStripMenuItem_Click);
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.closeToolStripMenuItem.Text = "Close ";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+            // 
+            // applicationsToolStripMenuItem
+            // 
+            this.applicationsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newApplicationToolStripMenuItem,
+            this.editApplicationToolStripMenuItem,
+            this.deleteApplicationToolStripMenuItem,
+            this.showToolStripMenuItem,
+            this.showAcceptedToolStripMenuItem,
+            this.lookUpToolStripMenuItem});
+            this.applicationsToolStripMenuItem.Name = "applicationsToolStripMenuItem";
+            this.applicationsToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
+            this.applicationsToolStripMenuItem.Text = "Applications";
+            // 
+            // newApplicationToolStripMenuItem
+            // 
+            this.newApplicationToolStripMenuItem.Name = "newApplicationToolStripMenuItem";
+            this.newApplicationToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.newApplicationToolStripMenuItem.Text = "New Application";
+            this.newApplicationToolStripMenuItem.Click += new System.EventHandler(this.newApplicationToolStripMenuItem_Click);
+            // 
+            // editApplicationToolStripMenuItem
+            // 
+            this.editApplicationToolStripMenuItem.Name = "editApplicationToolStripMenuItem";
+            this.editApplicationToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.editApplicationToolStripMenuItem.Text = "Edit Application";
+            this.editApplicationToolStripMenuItem.Click += new System.EventHandler(this.editApplicationToolStripMenuItem_Click);
+            // 
+            // deleteApplicationToolStripMenuItem
+            // 
+            this.deleteApplicationToolStripMenuItem.Name = "deleteApplicationToolStripMenuItem";
+            this.deleteApplicationToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.deleteApplicationToolStripMenuItem.Text = "Delete Application";
+            this.deleteApplicationToolStripMenuItem.Click += new System.EventHandler(this.deleteApplicationToolStripMenuItem_Click);
+            // 
+            // showToolStripMenuItem
+            // 
+            this.showToolStripMenuItem.Name = "showToolStripMenuItem";
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.showToolStripMenuItem.Text = "Show";
+            this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
+            // 
+            // showAcceptedToolStripMenuItem
+            // 
+            this.showAcceptedToolStripMenuItem.Name = "showAcceptedToolStripMenuItem";
+            this.showAcceptedToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.showAcceptedToolStripMenuItem.Text = "Show Accepted";
+            this.showAcceptedToolStripMenuItem.Click += new System.EventHandler(this.showAcceptedToolStripMenuItem_Click);
+            // 
+            // lookUpToolStripMenuItem
+            // 
+            this.lookUpToolStripMenuItem.Name = "lookUpToolStripMenuItem";
+            this.lookUpToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.lookUpToolStripMenuItem.Text = "LookUp";
+            this.lookUpToolStripMenuItem.Click += new System.EventHandler(this.lookUpToolStripMenuItem_Click);
+            // 
+            // universityToolStripMenuItem
+            // 
+            this.universityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showToolStripMenuItem1,
+            this.showAcceptedToolStripMenuItem1,
+            this.lookUpToolStripMenuItem1});
+            this.universityToolStripMenuItem.Name = "universityToolStripMenuItem";
+            this.universityToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.universityToolStripMenuItem.Text = "University";
+            // 
+            // synchronizeToolStripMenuItem
+            // 
+            this.synchronizeToolStripMenuItem.Name = "synchronizeToolStripMenuItem";
+            this.synchronizeToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.synchronizeToolStripMenuItem.Text = "Synchronize";
+            this.synchronizeToolStripMenuItem.Click += new System.EventHandler(this.synchronizeToolStripMenuItem_Click);
+            // 
+            // showToolStripMenuItem1
+            // 
+            this.showToolStripMenuItem1.Name = "showToolStripMenuItem1";
+            this.showToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.showToolStripMenuItem1.Text = "Show";
+            this.showToolStripMenuItem1.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
+            // 
+            // showAcceptedToolStripMenuItem1
+            // 
+            this.showAcceptedToolStripMenuItem1.Name = "showAcceptedToolStripMenuItem1";
+            this.showAcceptedToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.showAcceptedToolStripMenuItem1.Text = "Show Accepted";
+            // 
+            // lookUpToolStripMenuItem1
+            // 
+            this.lookUpToolStripMenuItem1.Name = "lookUpToolStripMenuItem1";
+            this.lookUpToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.lookUpToolStripMenuItem1.Text = "Look up";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(434, 390);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.buttonLookUp);
-            this.Controls.Add(this.buttonShowAll);
-            this.Controls.Add(this.buttonShow);
-            this.Controls.Add(this.buttonDelete);
-            this.Controls.Add(this.buttonEdit);
-            this.Controls.Add(this.buttonNewApllience);
-            this.Controls.Add(this.buttonCloseFile);
-            this.Controls.Add(this.buttonFileDialog);
-            this.Controls.Add(this.buttonSynchronize);
-            this.Controls.Add(this.buttonApplience);
-            this.Controls.Add(this.buttonFile);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Button buttonFile;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Button buttonApplience;
-        private System.Windows.Forms.Button buttonSynchronize;
-        private System.Windows.Forms.Button buttonFileDialog;
-        private System.Windows.Forms.Button buttonCloseFile;
-        private System.Windows.Forms.Button buttonNewApllience;
-        private System.Windows.Forms.Button buttonEdit;
-        private System.Windows.Forms.Button buttonDelete;
-        private System.Windows.Forms.Button buttonShow;
-        private System.Windows.Forms.Button buttonShowAll;
-        private System.Windows.Forms.Button buttonLookUp;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadFilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem applicationsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newApplicationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editApplicationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteApplicationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showAcceptedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lookUpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem universityToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem synchronizeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem showAcceptedToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem lookUpToolStripMenuItem1;
     }
 }
 

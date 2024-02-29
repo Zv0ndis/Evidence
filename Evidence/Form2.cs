@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 using System.Web;
 using static System.Windows.Forms.LinkLabel;
 using static System.Net.Mime.MediaTypeNames;
+using System.Globalization;
 
 namespace Evidence
 {
@@ -142,7 +143,7 @@ namespace Evidence
 
                     using (StreamWriter sw = new StreamWriter(filePathUniversity, true))
                     {
-                        string dataLine = $"{uniqueCode},{name},{surname},{dateOfBirth},{selectedStudy},{points},{average},{acceptedChoice}";
+                        string dataLine = $"{uniqueCode};{name};{surname};{dateOfBirth};{selectedStudy};{points};{average};{acceptedChoice}";
                         sw.WriteLine(dataLine);
                     }
                 }
@@ -150,12 +151,13 @@ namespace Evidence
                 {
                     using (StreamWriter sw = new StreamWriter(filePathHighSchool, true))
                     {
-                        string dataline = $"{uniqueCode},{name},{surname},{dateOfBirth},{selectedStudy},{points},{acceptedChoice}";
+                        string dataline = $"{uniqueCode};{name};{surname};{dateOfBirth};{selectedStudy};{points};{acceptedChoice}";
                         sw.WriteLine(dataline);
                     }
                 }
             }
         }
+
 
         private void UpdateApplicationRecord(Application originalApplication)
         {
@@ -179,17 +181,17 @@ namespace Evidence
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    string[] parts = line.Split(',');
+                    string[] parts = line.Split(';');
                     if (parts.Length >= 1 && parts[0] == originalApplication.Id)
                     {
                         if (originalApplication is UApplication)
                         {
                             ((UApplication)originalApplication).Average = Convert.ToDouble(maskedTextBoxAverage.Text);
-                            line = $"{originalApplication.Id},{originalApplication.Name},{originalApplication.Surname},{originalApplication.Dob},{originalApplication.Study},{originalApplication.Points},{((UApplication)originalApplication).Average},{originalApplication.Accepted}";
+                            line = $"{originalApplication.Id};{originalApplication.Name};{originalApplication.Surname};{originalApplication.Dob};{originalApplication.Study};{originalApplication.Points};{((UApplication)originalApplication).Average};{originalApplication.Accepted}";
                         }
                         else
                         {
-                            line = $"{originalApplication.Id},{originalApplication.Name},{originalApplication.Surname},{originalApplication.Dob},{originalApplication.Study},{originalApplication.Points},{originalApplication.Accepted}";
+                            line = $"{originalApplication.Id};{originalApplication.Name};{originalApplication.Surname};{originalApplication.Dob};{originalApplication.Study};{originalApplication.Points};{originalApplication.Accepted}";
                         }
                     }
                     updatedLines.Add(line);
@@ -203,6 +205,11 @@ namespace Evidence
                     writer.WriteLine(updatedLine);
                 }
             }
+        }
+
+        private void maskedTextBoxAverage_MaskInputRejected_1(object sender, MaskInputRejectedEventArgs e)
+        {
+
         }
 
         private void fillParametersOfStudent(Application apps)

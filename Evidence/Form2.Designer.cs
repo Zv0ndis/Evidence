@@ -216,6 +216,7 @@ namespace Evidence
             this.maskedTextBoxAverage.Name = "maskedTextBoxAverage";
             this.maskedTextBoxAverage.Size = new System.Drawing.Size(22, 20);
             this.maskedTextBoxAverage.TabIndex = 16;
+            this.maskedTextBoxAverage.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBoxAverage_MaskInputRejected_1);
             this.maskedTextBoxAverage.TextChanged += new System.EventHandler(this.maskedTextBoxAverage_TextChanged);
             // 
             // groupBox1
