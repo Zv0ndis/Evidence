@@ -36,6 +36,7 @@ namespace Evidence
             pictureBox2.Image = Image.FromFile("vejska.png");
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.Cursor = Cursors.Hand;
+            this.Name = "Select which accepted applications:";
         }
 
         private void label1_Click(object sender, EventArgs e)

@@ -53,6 +53,7 @@ namespace Evidence
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            this.Name = editMode ? "Edit Application" : "New Application";
             dateTimePickerDoB.Format = DateTimePickerFormat.Short;
             dateTimePickerDoB.CustomFormat = "dd/MM/yyyy";
             UniqueCodeGenerator.LoadExistingCodes(filePathHighSchool, filePathUniversity);
@@ -72,6 +73,12 @@ namespace Evidence
                 radioButtonAccepted.Checked = true;
                 groupBox2.Enabled = false;
             }
+            else
+            {
+                groupBox2.Enabled = true;
+            }
+            
+        
         }
 
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)
@@ -100,13 +107,18 @@ namespace Evidence
         private void radioButtonSecondarySchool_CheckedChanged(object sender, EventArgs e)
         {
             maskedTextBoxAverage.Visible = false;
+            groupBox2.Enabled = true;
+            maskedTextBoxAverage.Text = "1.6";
             labelAverage.Visible = false;
+            radioButtonAccepted.Checked = false; radioButtonDenied.Checked = false;
         }
 
         private void radioButtonUniversity_CheckedChanged(object sender, EventArgs e)
         {
             maskedTextBoxAverage.Visible = true;
+            maskedTextBoxAverage.Text = string.Empty;
             labelAverage.Visible = true;
+            radioButtonAccepted.Checked = false; radioButtonDenied.Checked= false;
         }
 
         private void maskedTextBoxAverage_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
@@ -202,6 +214,19 @@ namespace Evidence
         private void maskedTextBoxAverage_MaskInputRejected_1(object sender, MaskInputRejectedEventArgs e)
         {
 
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+            if(radioButtonSecondarySchool.Checked)
+            {
+                maskedTextBoxAverage.Visible = false;
+                maskedTextBoxAverage.Text = null;
+            }
+            else
+            {
+                maskedTextBoxAverage.Visible = true;
+            }
         }
 
         private void fillParametersOfStudent(Application apps)

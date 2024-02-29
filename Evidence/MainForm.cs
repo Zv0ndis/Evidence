@@ -31,14 +31,70 @@ namespace Evidence
         public MainForm()
         {
             InitializeComponent();
-            if (!File.Exists(filePathHighSchool)) using (StreamWriter sw1 = File.CreateText(filePathHighSchool)) { }
+            if (!File.Exists(filePathHighSchool))
+            {
+                using (StreamWriter sw1 = File.CreateText(filePathHighSchool)) { }
+            }
+            else
+            {
+                using (StreamReader sr = new StreamReader(filePathHighSchool))
+                {
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        string[] parts = line.Split(';');
+                        if (parts.Length >= 1)
+                        {
+                            applications.Add(
+                                //             {uniqueCode},{name},{surname},       {dateOfBirth},     {selectedStudy}    {points},           {acceptedChoice}";
+                                new HSApplication(parts[0], parts[1], parts[2], DateTime.Parse(parts[3]), parts[4], Convert.ToDouble(parts[5]), Convert.ToBoolean(parts[6])));
+                            listBox1.Items.Add($"{parts[1]} {parts[2]} - {parts[4]}");
+                        }
+                    }
+                }
+            }
 
-            if (!File.Exists(filePathUniversity)) using (StreamWriter sw2 = File.CreateText(filePathUniversity)) { }
+            if (!File.Exists(filePathUniversity))
+            {
+                using (StreamWriter sw2 = File.CreateText(filePathUniversity)) { } ;
+            }
+            else
+            {
+                using (StreamReader sr = new StreamReader(filePathUniversity))
+                {
+                    listBox2.Items.Clear();
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        string[] parts = line.Split(';');
+                        if (parts.Length >= 1)
+                        {
+                            // Parse parts correctly and assign to variables
+                            string uniqueCode = parts[0];
+                            string name = parts[1];
+                            string surname = parts[2];
+                            DateTime dateOfBirth = DateTime.Parse(parts[3]);
+                            string selectedStudy = parts[4];
+                            double points = Convert.ToDouble(parts[5]);
+                            double average = Convert.ToDouble(parts[6]);
+                            bool acceptedChoice = Convert.ToBoolean(parts[7]);
+
+                            // Create UApplication object with correct parameters
+                            UApplication actual = new UApplication(uniqueCode, name, surname, dateOfBirth, selectedStudy, points, average, acceptedChoice);
+                            applications.Add(actual);
+
+                            // Add item to ListBox
+                            listBox2.Items.Add($"{name} {surname} - {selectedStudy}");
+                        }
+                    }
+                }
+            }
         }
 
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Name = "Main program menu";
 
         }
 
@@ -90,14 +146,28 @@ namespace Evidence
                 // Convert the list of IDs to a comma-separated string
                 string idsString = string.Join(",", allApplicationIds.Select(id => "'" + id + "'"));
 
-                // Delete applications that are not in the list from HighSchool and University tables
-                string deleteQuery = $@"DELETE FROM [dbo].[HighSchool] WHERE Id NOT IN ({idsString})";
-                SqlCommand deleteCommand = new SqlCommand(deleteQuery, connection, transaction);
-                deleteCommand.ExecuteNonQuery();
+                if (!string.IsNullOrEmpty(idsString))
+                {
+                    // Delete applications that are not in the list from HighSchool and University tables
+                    string deleteQuery = $@"DELETE FROM [dbo].[HighSchool] WHERE Id NOT IN ({idsString})";
+                    SqlCommand deleteCommand = new SqlCommand(deleteQuery, connection, transaction);
+                    deleteCommand.ExecuteNonQuery();
 
-                deleteQuery = $@"DELETE FROM[dbo].[University] WHERE Id NOT IN({idsString})";
-                deleteCommand = new SqlCommand(deleteQuery, connection, transaction);
-                deleteCommand.ExecuteNonQuery();
+                    deleteQuery = $@"DELETE FROM[dbo].[University] WHERE Id NOT IN({idsString})";
+                    deleteCommand = new SqlCommand(deleteQuery, connection, transaction);
+                    deleteCommand.ExecuteNonQuery();
+                }
+                else
+                {
+                    string deleteQuery = $@"DELETE FROM [dbo].[HighSchool]";
+                    SqlCommand deleteCommand = new SqlCommand(deleteQuery, connection, transaction);
+                    deleteCommand.ExecuteNonQuery();
+
+                    deleteQuery = $@"DELETE FROM[dbo].[University]";
+                    deleteCommand = new SqlCommand(deleteQuery, connection, transaction);
+                    deleteCommand.ExecuteNonQuery();
+                }
+
 
                 foreach (var application in applications)
                 {
